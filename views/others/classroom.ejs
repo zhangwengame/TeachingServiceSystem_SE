@@ -1,0 +1,33 @@
+<!doctype html>
+<% include head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include navbar.html %>
+<!-- 侧边框 -->
+<% include slide_grades.html%>
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('classroom');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('sumup');
+            slide.className='active';
+   }
+
+     setNavActive();
+     setSlideActive();
+</script>
+
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-search"></i>Classroom Info</h3>
+        </div>
+    </div>
+  </div>
+</div>

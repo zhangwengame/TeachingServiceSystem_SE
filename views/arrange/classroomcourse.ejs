@@ -1,0 +1,231 @@
+<!doctype html>
+<% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<%if(type==0) {%>
+<% include slidebar_student.html%>
+<% }%>
+<%if(type==1) {%>
+<% include slidebar_teacher.html%>
+<% }%>
+<%if(type==2) {%>
+<% include arrange_slidebar.html%>
+<% }%>
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('arrange');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('classroomcourse');
+            slide.className='active';
+   }
+
+     setNavActive();
+     setSlideActive();
+</script>
+
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-calendar"></i>课表查询(基于教室)</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="span10">
+    <div class="box">
+      <form name="input" action="/arrange/classroomcourse" method="post">
+      <div class="box-header">
+        <span class="title">教室信息</span>
+        <ul class="box-toolbar">
+          <li class="dropdown">
+            <ul>
+                <li class="input">
+                  <label>教室名称</label>
+                  <input type="text" name="classid2">
+                </li>
+             </ul>
+            <button class="btn btn-blue dropdown-toggle" course_data-toggle="dropdown">搜索教室<span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <div class="box-content padded">
+                <form class="separate-sections" method="post" action="#">
+                  <input type="text" name="ID" placeholder="教学楼">
+                  <input type="text" name="catagory" placeholder="教室号">
+                  <button type="submit" class="btn btn-blue btn-block">提交</button>
+                </form>
+              </div>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="box-content scrollable" style="overflow-y:auto">
+        <table width="100%" class="table table-normal">
+          <thead>
+            <tr>
+              <td style="width:9%">课时</td>
+              <td style="width:13%">周一</td>
+              <td style="width:13%">周二</td>
+              <td style="width:13%">周三</td>
+              <td style="width:13%">周四</td>
+              <td style="width:13%">周五</td>
+              <td style="width:13%">周六</td>   
+              <td style="width:13%">周日</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr height="100px">
+              <td>第1、2节</br>8:30~9:35</td>
+              <td id="Mon12"><%= course_data[0].Single_1_2_Name %></td>
+              <td id="Tue12"><%= course_data[1].Single_1_2_Name %></td>
+              <td id="Web12"><%= course_data[2].Single_1_2_Name %></td>
+              <td id="Thu12">
+                <table>
+                  <thead>
+                    <td>
+                      单
+                    </td>
+                    <td>
+                      双
+                    </td>
+                    
+                  </thead>
+                  <tbody>
+                    <td>
+                      <%= course_data[3].Single_1_2_Name %>
+                    </td>
+                    <td>
+                      <%= course_data[3].Single_1_2_Name %>
+                    </td>
+                  </tbody>
+                </table>
+              </td>
+              <td id="Fri12"><%= course_data[4].Single_1_2_Name %></td>
+              <td id="Sat12"><%= course_data[5].Single_1_2_Name %></td>
+              <td id="Sun12"><%= course_data[6].Single_1_2_Name %></td>
+            </tr>
+            <tr height="100px">
+              <td>第3、4节</br>9:50~11:25</td>
+              <td id="Mon34"><%= course_data[0].Single_3_4_Name %></td>
+              <td id="Tue34"><%= course_data[1].Single_3_4_Name %></td>
+              <td id="Web34"><%= course_data[2].Single_3_4_Name %></td>
+              <td id="Thu34"><%= course_data[3].Single_3_4_Name %></td>
+              <td id="Fri34"><%= course_data[4].Single_3_4_Name %></td>
+              <td id="Sat34"><%= course_data[5].Single_3_4_Name %></td>
+              <td id="Sun34"><%= course_data[6].Single_3_4_Name %></td>
+            </tr>
+            <tr height="100px">
+              <td>第5节</br>11:30~12:15</td>
+              <td id="Mon5"><%= course_data[0].Single_5_Name %></td>
+              <td id="Tue5"><%= course_data[1].Single_5_Name %></td>
+              <td id="Web5"><%= course_data[2].Single_5_Name %></td>
+              <td id="Thu5"><%= course_data[3].Single_5_Name %></td>
+              <td id="Fri5"><%= course_data[4].Single_5_Name %></td>
+              <td id="Sat5"><%= course_data[5].Single_5_Name %></td>   
+              <td id="Sun5"><%= course_data[6].Single_5_Name %></td>
+            </tr>
+            <tr height="100px">
+              <td>第6节</br>13:15~14:00</td>
+              <td id="Mon6">
+                <table>
+                  <thead>
+                    <td>单</td>
+                    <td>双</td>
+                  </thead>
+                  <tbody>
+                    <td>
+                      <%= course_data[0].Single_6_Name %>
+                    </td>
+                    <td>
+                      <%= course_data[0].Single_6_Name %>
+                    </td>
+                  </tbody>
+                </table>
+              </td>
+              <td id="Tue6"><%= course_data[1].Single_6_Name %></td>
+              <td id="Web6"><%= course_data[2].Single_6_Name %></td>
+              <td id="Thu6"><%= course_data[3].Single_6_Name %></td>
+              <td id="Fri6"><%= course_data[4].Single_6_Name %></td>
+              <td id="Sat6"><%= course_data[5].Single_6_Name %></td>
+              <td id="Sun6"><%= course_data[6].Single_6_Name %></td>
+            </tr>
+            <tr height="100px">
+              <td>第7、8节</br>14:05~15:40</td>
+              <td id="Mon78"><%= course_data[0].Single_7_8_Name %></td>
+              <td id="Tue78"><%= course_data[1].Single_7_8_Name %></td>
+              <td id="Web78"><%= course_data[2].Single_7_8_Name %></td>
+              <td id="Thu78"><%= course_data[3].Single_7_8_Name %></td>
+              <td id="Fri78"><%= course_data[4].Single_7_8_Name %></td>
+              <td id="Sat78">
+                <table>
+                  <thead>
+                    <td>单</td>
+                    <td>双</td>
+                  </thead>
+                  <tbody>
+                    <td>
+                      <%= course_data[5].Single_7_8_Name %>
+                    </td>
+                    <td>
+                      <%= course_data[5].Single_7_8_Name %>
+                    </td>
+                  </tbody>
+                </table>
+              </td>
+              <td id="Sun78"><%= course_data[6].Single_7_8_Name %></td>
+            </tr>
+            <tr height="100px">
+              <td>第9、10节</br>15:55~17:30</td>
+              <td id="Mon910"><%= course_data[0].Single_9_10_Name %></td>
+              <td id="Tue910"><%= course_data[1].Single_9_10_Name %></td>
+              <td id="Web910"><%= course_data[2].Single_9_10_Name %></td>
+              <td id="Thu910"><%= course_data[3].Single_9_10_Name %></td>
+              <td id="Fri910"><%= course_data[4].Single_9_10_Name %></td>
+              <td id="Sat910"><%= course_data[5].Single_9_10_Name %></td>
+              <td id="Sun910"><%= course_data[6].Single_9_10_Name %></td>
+            </tr>
+            <tr height="100px">
+              <td>晚上</br>18:30~21:30</td>
+              <td id="Mon_night"><%= course_data[0].Single_11_12_Name %></td>
+              <td id="Tue_night"><%= course_data[1].Single_11_12_Name %></td>
+              <td id="Web_night"><%= course_data[2].Single_11_12_Name %></td>
+              <td id="Thu_night"><%= course_data[3].Single_11_12_Name %></td>
+              <td id="Fri_night"><%= course_data[4].Single_11_12_Name %></td>
+              <td id="Sat_night"><%= course_data[5].Single_11_12_Name %></td>
+              <td id="Sun_night"><%= course_data[6].Single_11_12_Name %></td>
+            </tr>
+          </tbody>  
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="span6">
+    <div class="box">
+      <div class="box-header">
+        <span class="title">增加教室</span>
+      </div>
+      <div class="box-content scrollable" style="overflow-y:auto">
+        <div class="box-content padded">
+          <form class="separate-sections" method="post" action="#">
+            <input style="width:100%" type="text" name="ID" placeholder="教学楼">
+            <input style="width:100%" type="text" name="catagory" placeholder="教室号">
+            <input style="width:100%" type="text" name="catagory" placeholder="容量">
+            <input style="width:100%" type="text" name="catagory" placeholder="备注">
+            <button type="submit" class="btn btn-blue btn-block">提交</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

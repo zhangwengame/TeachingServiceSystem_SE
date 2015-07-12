@@ -1,0 +1,91 @@
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:400px;width:900px"></div>
+    <div id="test" style="height:400px"></div>
+    <script src="../Echart/dist/echarts-all.js"></script>
+    <SCRIPT TYPE="text/javascript">
+        var option2 = {
+                    title:{
+                        show : true,
+                        x : 'center',
+                        y : 20,
+                        text : '<%= title %>'
+                    },
+                    tooltip: {
+                        show: true//,
+                        //trigger: 'axis'
+                    },
+                    legend: {
+                        x : 50,
+                        data:['成绩段'
+                        <% for(var i = 0; i < legends.length; i++){%>
+                        ,"<%= legends[i] %>"
+                        <% } %>
+                        ]
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            magicType : {show: true, 
+                                type: ['line', 'bar']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ["<%= legends[0] %>"
+                            <% for(var i = 1; i < legends.length; i++){%>
+                            ,"<%= legends[i] %>"
+                            <% } %>
+                            ]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'成绩段',
+                            type:'bar',
+                            data:["<%= personNum[0] %>"
+                            <% for(var i = 1; i < personNum.length; i++){%>
+                            ,<%= personNum[i] %>
+                            <% } %>
+                            ]
+                        },
+                        {
+                            name:'成绩分布',
+                            type:'pie',
+                            tooltip : {
+                                trigger: 'item',
+                                formatter: '{a} <br/>{b} : {c} ({d}%)'
+                            },
+                            center: [200,130],
+                            radius : [0, 50],
+                            itemStyle :　{
+                                normal : {
+                                    labelLine : {
+                                        length : 15
+                                    }
+                                }
+                            },
+                            data:[
+                                {value:<%= personNum[0] %>, name:'<%= legends[0] %>'}
+                                <% for(var i = 1; i < personNum.length; i++){%>
+                                ,{value:<%= personNum[i] %>, name:'<%= legends[i] %>'}
+                                <% } %>
+                            ]
+                        }
+                    ]
+                };
+
+    	//使用
+    	 var myChart = echarts.init(document.getElementById('main'),'macarons'); 
+    	 myChart.setOption(option2);
+    	 ///myChart.reflesh();
+    </SCRIPT>

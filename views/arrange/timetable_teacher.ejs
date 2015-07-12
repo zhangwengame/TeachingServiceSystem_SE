@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<%if(type==0) {%>
+<% include slidebar_student.html%>
+<% }%>
+<%if(type==1) {%>
+<% include slidebar_teacher.html%>
+<% }%>
+<%if(type==2) {%>
+<% include arrange_slidebar.html%>
+<% }%>
+<!--侧边框结束-->
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('arrange');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('timetable_classroom');
+            slide.className='active';
+   }
+  setNavActive();
+  setSlideActive();
+</script>
+
+
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-calendar"></i>课表查询(基于教师)</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- 显示列表状态课表 -->
+  <div class="box-content padded" style="text-align:center;">
+      <table width="100%" class="table table-normal">
+      <thead>
+        <tr>
+          <td style="width:15%">课程编号</td>
+          <td style="width:25%">课程名称</td>
+          <td style="width:10%">教师姓名</td>
+          <td style="width:%10">学期</td>
+          <td style="width:15%">上课时间</td>
+          <td style="width:10%">上课校区</td>   
+          <td style="width:10%">上课地点</td>
+        </tr>
+      </thead>
+      <tbody>
+       <form action="/timetable_classroom" role="form" method="post">
+        <% for(var i=0; i<course_data.length;i++) {%>
+        <tr>
+          <td><%= course_data[i].courseid2 %></a></td>
+          <td><%= course_data[i].coursename %></a></td>
+          <td><%= course_data[i].teacher %></td>
+          <td><%= course_data[i].courseterm %></td>
+          <td><%= course_data[i].coursetime %></td>
+          <td><%= course_data[i].campus %></td>
+          <td><%= course_data[i].room %></td>
+        </tr>
+        <% }%>
+      </tbody>  
+    </table>
+  </div>
+</div>
+</body>
+</html>

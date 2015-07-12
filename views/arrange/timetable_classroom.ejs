@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+<head>
+<% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<%if(type==0) {%>
+<% include slidebar_student.html%>
+<% }%>
+<%if(type==1) {%>
+<% include slidebar_teacher.html%>
+<% }%>
+<%if(type==2) {%>
+<% include arrange_slidebar.html%>
+<% }%>
+<!--侧边框结束-->
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('arrange');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('timetable_classroom');
+            slide.className='active';
+   }
+  setNavActive();
+  setSlideActive();
+</script>
+
+
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-calendar"></i>课表查询(基于教室)</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="span10">
+    <div class="box">
+      <div class="box-header">
+        <span class="title">教室信息填写</span>
+      </div>
+       <form name="input" action="/arrange/timetable_classroom" method="post">
+        <ul class="box-toolbar">
+          <ul>
+            <li class="input">
+              <label>校区</label>
+              <select name="campus">
+                <option value="紫金港校区" selected="selected">紫金港校区</option>
+                <option value="玉泉校区">玉泉校区</option>
+                <option value="西溪校区">西溪校区</option>
+                <option value="华家池校区">华家池校区</option>
+                <option value="之江校区">之江校区</option>
+              </select>
+            </li>
+          </ul>
+          <ul>
+              <li class="input">
+                <label>教室名称</label>
+                <input type="text" name="classid2">
+              </li>
+           </ul>
+          <button type="submit" class="btn btn-blue">查询(列表显示)</button>
+        </ul>
+       </form>
+      </div>
+     </div>
+    <!-- 显示列表状态课表 -->
+    <div class="box-content padded" style="text-align:center;">
+        <table width="100%" class="table table-normal">
+        <thead>
+          <tr>
+            <td style="width:15%">课程编号</td>
+            <td style="width:25%">课程名称</td>
+            <td style="width:10%">教师姓名</td>
+            <td style="width:%10">学期</td>
+            <td style="width:15%">上课时间</td>
+            <td style="width:10%">上课校区</td>   
+            <td style="width:10%">上课地点</td>
+          </tr>
+        </thead>
+        <tbody>
+         <form action="/timetable_classroom" role="form" method="post">
+          <% for(var i=0; i<course_data.length;i++) {%>
+          <tr>
+            <td><%= course_data[i].courseid2 %></a></td>
+            <td><%= course_data[i].coursename %></a></td>
+            <td><%= course_data[i].teacher %></td>
+            <td><%= course_data[i].courseterm %></td>
+            <td><%= course_data[i].coursetime %></td>
+            <td><%= course_data[i].campus %></td>
+            <td><%= course_data[i].room %></td>
+          </tr>
+          <% }%>
+        </tbody>  
+        </table>
+      </div>
+      
+<!--      <div class="box-content padded" style="text-align:center; top:-440px; position:relative;" id="table_layout" hidden="">
+          <table width="100%" class="table table-normal">
+          <thead>
+            <tr>
+              <td style="width:9%">&nbsp;</td>
+              <td style="width:13%">周一</td>
+              <td style="width:13%">周二</td>
+              <td style="width:13%">周三</td>
+              <td style="width:13%">周四</td>
+              <td style="width:13%">周五</td>
+              <td style="width:13%">周六</td>   
+              <td style="width:13%">周日</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr height="100px">
+              <td>第1、2节</br>8:30~9:35</td>
+              <td id="Mon12">&nbsp;</td>
+              <td id="Tue12">&nbsp;</td>
+              <td id="Web12">&nbsp;</td>
+              <td id="Thu12">&nbsp;</td>
+              <td id="Fri12">&nbsp;</td>
+              <td id="Sat12">&nbsp;</td>   
+              <td id="Sun12">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>第3、4节</br>9:50~11:25</td>
+              <td id="Mon34">&nbsp;</td>
+              <td id="Tue34">&nbsp;</td>
+              <td id="Web34">&nbsp;</td>
+              <td id="Thu34">&nbsp;</td>
+              <td id="Fri34">&nbsp;</td>
+              <td id="Sat34">&nbsp;</td>   
+              <td id="Sun34">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>第5节</br>11:30~12:15</td>
+              <td id="Mon5">&nbsp;</td>
+              <td id="Tue5">&nbsp;</td>
+              <td id="Web5">&nbsp;</td>
+              <td id="Thu5">&nbsp;</td>
+              <td id="Fri5">&nbsp;</td>
+              <td id="Sat5">&nbsp;</td>   
+              <td id="Sun5">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>第6节</br>13:15~14:00</td>
+              <td id="Mon6">&nbsp;</td>
+              <td id="Tue6">&nbsp;</td>
+              <td id="Web6">&nbsp;</td>
+              <td id="Thu6">&nbsp;</td>
+              <td id="Fri6">&nbsp;</td>
+              <td id="Sat6">&nbsp;</td>   
+              <td id="Sun6">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>第7、8节</br>14:05~15:40</td>
+              <td id="Mon78">&nbsp;</td>
+              <td id="Tue78">&nbsp;</td>
+              <td id="Web78">&nbsp;</td>
+              <td id="Thu78">&nbsp;</td>
+              <td id="Fri78">&nbsp;</td>
+              <td id="Sat78">&nbsp;</td>   
+              <td id="Sun78">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>第9、10节</br>15:55~17:30</td>
+              <td id="Mon910">&nbsp;</td>
+              <td id="Tue910">&nbsp;</td>
+              <td id="Web910">&nbsp;</td>
+              <td id="Thu910">&nbsp;</td>
+              <td id="Fri910">&nbsp;</td>
+              <td id="Sat910">&nbsp;</td>   
+              <td id="Sun910">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>晚上</br>18:30~21:30</td>
+              <td id="Mon_night">&nbsp;</td>
+              <td id="Tue_night">&nbsp;</td>
+              <td id="Web_night">&nbsp;</td>
+              <td id="Thu_night">&nbsp;</td>
+              <td id="Fri_night">&nbsp;</td>
+              <td id="Sat_night">&nbsp;</td>   
+              <td id="Sun_night">&nbsp;</td>
+            </tr>
+          </tbody>  
+          </table>-->
+</div>
+</body>
+</html>

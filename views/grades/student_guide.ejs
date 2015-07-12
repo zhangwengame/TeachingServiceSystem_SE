@@ -1,0 +1,226 @@
+<!doctype html>
+<% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include student_slide.html%>
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('grades');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('tutorial');
+            slide.className='active';
+   }
+
+     setNavActive();
+     setSlideActive();
+</script>
+
+
+
+
+<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-search"></i>培养方案</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="span10">
+<div class="col-md-6">
+    <!-- find me in partials/tasks_table -->
+
+<div class="box">
+  <div class="box-header">  
+    <span class="title">总学分进展</span>
+    <ul class="box-toolbar">
+      <% if((parseFloat(getpoint1)+parseFloat(getpoint2)+parseFloat(getpoint3))==(parseFloat(total_point1)+parseFloat(total_point2)+parseFloat(total_point3))){%>
+      <li><span class="label label-green">已完成 <%= parseFloat(getpoint1)+parseFloat(getpoint2)+parseFloat(getpoint3) %>/<%= parseFloat(total_point1)+parseFloat(total_point2) +parseFloat(total_point3)%> 学分</span></li>
+      <% } else {%>
+      <li><span class="label label-red">已完成 <%= parseFloat(getpoint1)+parseFloat(getpoint2)+parseFloat(getpoint3) %>/<%= parseFloat(total_point1)+parseFloat(total_point2)+parseFloat(total_point3) %> 学分</span></li>
+      <% } %>  
+    </ul>
+  </div>
+  <div class="box-content">
+    <div class="box-header">
+          <span class="title">公共课</span>
+           <ul class="box-toolbar">
+       <% if((parseFloat(getpoint1))==(parseFloat(total_point1))){%>
+      <li><span class="label label-green">已完成 <%= getpoint1 %>/<%= total_point1 %> 学分</span></li>
+      <% } else {%>
+      <li><span class="label label-red">已完成 <%= getpoint1 %>/<%= total_point1 %> 学分</span></li>
+      <% } %>
+    </ul>
+    </div>
+    <table class="table table-normal">
+      <thead>
+      <tr>
+        <td>状态</td>
+        <td>课程号</td>
+        <td>课程名称</td>
+        <td>学分</td>
+        <td>周学时</td>
+        <td>建议修读时间</td>
+<!--        <td>学期</td>-->
+      </tr>
+      </thead>
+
+      <tbody>
+         <% for(var i=0;i<dev_plan1.length;i++){%>
+         <% if(complete1[i]==1){%>
+         <tr class="status-success">
+         <td class="icon"><i class="icon-ok"></i></td>
+         <td><%= dev_plan1[i].id %></td>
+         <td><%= dev_plan1[i].name %></td>
+         <td><%= dev_plan1[i].credit%></td>
+         <td><%= dev_plan1[i].time %></td>
+         <td><%= year1[i] %></td>         
+         </tr>
+         <% } else {%>    
+         <tr class="status-success">
+         <td class="icon"><i class="icon-check-empty"></i></td>
+         <td><%= dev_plan1[i].id %></td>
+         <td><%= dev_plan1[i].name %></td>
+         <td><%= dev_plan1[i].credit%></td>
+         <td><%= dev_plan1[i].time %></td>
+         <td><%= year1[i] %></td>         
+
+         </tr>
+         <% }} %>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<div class="col-md-6">
+    <!-- find me in partials/tasks_table -->
+
+<div class="box">
+  <div class="box-content">
+    <div class="box-header">
+          <span class="title">专业必修</span>
+           <ul class="box-toolbar">
+             <% if((parseFloat(getpoint2))==(parseFloat(total_point2))){%>
+      <li><span class="label label-green">已完成 <%= getpoint2 %>/<%= total_point2 %> 学分</span></li>
+      <% } else {%>
+      <li><span class="label label-red">已完成 <%= getpoint2 %>/<%= total_point2 %> 学分</span></li>
+      <% } %>
+    </ul>
+    </div>
+    <table class="table table-normal">
+      <thead>
+      <tr>
+        <td>状态</td>
+        <td>课程号</td>
+        <td>课程名称</td>
+        <td>学分</td>
+        <td>周学时</td>
+        <td>建议修读时间</td>
+<!--        <td>学期</td>-->
+      </tr>
+      </thead>
+
+      <tbody>
+         <% for(var i=0;i<dev_plan2.length;i++){%>
+         <% if(complete2[i]==1){%>
+         <tr class="status-success">
+         <td class="icon"><i class="icon-ok"></i></td>
+         <td><%= dev_plan2[i].id %></td>
+         <td><%= dev_plan2[i].name %></td>
+         <td><%= dev_plan2[i].credit%></td>
+         <td><%= dev_plan2[i].time %></td>
+         <td><%= year2[i] %></td>         
+
+         </tr>
+         <% } else {%>    
+         <tr class="status-success">
+         <td class="icon"><i class="icon-check-empty"></i></td>
+         <td><%= dev_plan2[i].id %></td>
+         <td><%= dev_plan2[i].name %></td>
+         <td><%= dev_plan2[i].credit %></td>
+         <td><%= dev_plan2[i].time %></td>
+         <td><%= year2[i] %></td>         
+         </tr>
+         <% }} %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="col-md-6">
+    <!-- find me in partials/tasks_table -->
+<div class="box">
+  <div class="box-header">  
+    <span class="title">专业选修</span>
+    <ul class="box-toolbar">
+      <% if((parseFloat(getpoint3))==(parseFloat(total_point3))){%>
+      <li><span class="label label-green">已完成 <%= getpoint3 %>/<%= total_point3 %> 学分</span></li>
+      <% } else {%>
+      <li><span class="label label-red">已完成 <%= getpoint3 %>/<%= total_point3 %> 学分</span></li>
+      <% } %>
+    </ul>
+  </div>
+  <div class="box-content">
+    
+    <table class="table table-normal">
+      <thead>
+      <tr>
+        <td>状态</td>
+        <td>课程号</td>
+        <td>课程名称</td>
+        <td>学分</td>
+        <td>周学时</td>
+        <td>建议修读时间</td> 
+      </tr>
+      </thead>
+
+      <tbody>
+         <% for(var i=0;i<dev_plan3.length;i++){%>
+         <% if(complete3[i]==1){%>
+         <tr class="status-success">
+         <td class="icon"><i class="icon-ok"></i></td>
+         <td><%= dev_plan3[i].id %></td>
+         <td><%= dev_plan3[i].name %></td>
+         <td><%= dev_plan3[i].credit%></td>
+         <td><%= dev_plan3[i].time %></td>
+         <td><%= year3[i] %></td>         
+
+         </tr>
+         <% } else {%>    
+         <tr class="status-success">
+         <td class="icon"><i class="icon-check-empty"></i></td>
+         <td><%= dev_plan3[i].id %></td>
+         <td><%= dev_plan3[i].name %></td>
+         <td><%= dev_plan3[i].credit%></td>
+         <td><%= dev_plan3[i].time %></td>
+         <td><%= year3[i] %></td>         
+
+         </tr>
+         <% }} %>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+
+
+
+
+</div>
+</div>
+</body>
+</html>

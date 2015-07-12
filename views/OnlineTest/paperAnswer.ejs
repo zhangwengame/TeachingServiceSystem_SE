@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../head.html %>
+  </head>
+  <body>
+
+    <script type="text/javascript">
+      var seconds = 0;
+      var minutes = 0;
+      var hours = 0;
+      var t;
+
+      var flag = false;
+
+      function timeCount() {
+          if(!flag){
+            document.getElementById('problems').style.display = ("block");
+            flag = true;
+          }
+          function addZero(num) {
+              var buffer = '';
+              if (num < 10) {
+                  buffer = '0' + num;
+              }
+              else {
+                  buffer = num.toString();
+              }
+              return buffer;
+          }
+          nowTime = addZero(hours)+ ':' + addZero(minutes) + ':' + addZero(seconds);
+          if(nowTime == "<%= paper.timeLimit %>")
+            document.getElementById('paperAnswer').submit();
+
+          document.getElementById('time').innerHTML = nowTime;
+          document.getElementById('txt').value = nowTime;
+          seconds = seconds + 1;
+          if (seconds == 60) {
+              seconds = 0;
+              minutes = minutes + 1;
+          }
+          if (minutes == 60) {
+              minutes = 0;
+              hours = hours + 1;
+          }
+
+          t = setTimeout("timeCount()", 1000)
+      }
+    </script>
+
+    <% include ../navbar.html %>
+    <% include slide_student.html %>
+
+    <div class="main-content">
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="area-top clearfix">
+            <div class="pull-left header">
+              <h3 class="title"><i class="icon-file-alt"></i>在线测试-答题</h3>
+              <h5>点击“开始答题”后开始计时，点击提交或到达时间之后试卷提交</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="span12">
+        <div class="box">
+          <div class="box-header">
+            <div class="title">答题: <%= paper.title %></div>
+          </div>
+          <%
+            if(done){
+          %>
+          <div class="box-content scrollable" style="height: 768px;overflow-y: auto">
+              <h1>您已完成答题。您的分数：<%= point %>，答题时间：<%= time %></h1>
+              <% for(var i = 0; i < problemsInPaper.length; i++){
+                  var problem = problemsInPaper[i];
+                  if(problem.type == 0){
+              %>
+              <div class="box-section news with-icons">
+                <div class="avatar blue">
+                  <i class="icon-ok icon-2x"></i>
+                </div>
+                <div class="news-content">
+                  <div class="news-title">
+                  <%= problem.stem %>(<%= problem.point %>分)
+                  </div><br/>
+                  <div class="news-text">
+                  <% if (problem.answer==1){ %>
+                    <b><i>A.<%= problem.choice[0] %></i></b>
+                  <% }else{ %>
+                    A.<%= problem.choice[0] %>
+                  <% } %>
+                  </br>
+                  <% if (problem.answer==2){ %>
+                    <b><i>B.<%= problem.choice[1] %></i></b>
+                  <% }else{ %>
+                    B.<%= problem.choice[1] %>
+                  <% } %>
+                  </br>
+                  <% if (problem.answer==3){ %>
+                    <b><i>C.<%= problem.choice[2] %></i></b>
+                  <% }else{ %>
+                    C.<%= problem.choice[2] %>
+                  <% } %>
+                  </br>
+                  <% if (problem.answer==4){ %>
+                    <b><i>D.<%= problem.choice[3] %></i></b>
+                  <% }else{ %>
+                    D.<%= problem.choice[3] %>
+                  <% } %>
+                  
+                  </div>
+                </div>
+              </div>
+              <% }else{ %>
+              <div class="box-section news with-icons">
+                <div class="avatar green">
+                  <i class="icon-lightbulb icon-2x"></i>
+                </div>
+                <div class="news-content">
+                  <div class="news-title">
+                    <%= problem.stem %>
+                  </div>
+                  <div class="news-text">
+                    <% if (problem.answer==1){ %>
+                      <b><i>True</i></b>
+                    <% }else{ %>
+                      <b><i>False</i></b>
+                    <% } %>
+                    
+                  </div>
+                </div>
+              </div>
+            <% }} %> 
+          <%
+            }
+            else{
+          %>
+          
+          <div class="box-content scrollable" style="height: 768px;overflow-y: auto">
+              <form id="paperAnswer" method="post">
+                <ul class="padded separate-sections">
+                  <p><h3>计时：（限时：<%= paper.timeLimit %>）</h3></p>
+                  <pre><div id="time">00:00:00</div></pre>
+                  <input style="display:none;" id="txt" name="clock" />
+                  <input class="btn btn-blue" type="button" value="开始答题" onclick="timeCount()" />
+                </ul>
+                
+                <div id="problems" style="display:none;">
+                <% for(var i = 0; i < problemsInPaper.length; i++){
+                    var problem = problemsInPaper[i];
+                    if(problem.type == 0){
+                %>
+                  <div class="box-section news with-icons">
+                    <div class="avatar blue">
+                      <i class="icon-ok icon-2x"></i>
+                    </div>
+                    <div class="news-content">
+                      <div class="news-title">
+                        <%= problem.stem %>(<%= problem.point %>分)
+                      </div><br/>
+                      <div class="news-text">
+                        <input class="icheck" style="position: relative;" type="radio" name="<%= problem._id %>" value="1" /><label for="iradio2" class="">A.<%= problem.choice[0] %></label>
+                        <br/>
+                        <input class="icheck" style="position: relative;" type="radio" name="<%= problem._id %>" value="2" /><label for="iradio2" class="">B.<%= problem.choice[1] %></label>
+                        <br/>
+                        <input class="icheck" style="position: relative;" type="radio" name="<%= problem._id %>" value="3" /><label for="iradio2" class="">C.<%= problem.choice[2] %></label>
+                        <br/>
+                        <input class="icheck" style="position: relative;" type="radio" name="<%= problem._id %>" value="4" /><label for="iradio2" class="">D.<%= problem.choice[3] %></label>
+                      </div>
+                    </div>
+                  </div>
+                <% }else{ %>
+                  <div class="box-section news with-icons">
+                    <div class="avatar green">
+                      <i class="icon-lightbulb icon-2x"></i>
+                    </div>
+                    <div class="news-content">
+                      <div class="news-title">
+                        <%= problem.stem %>(<%= problem.point %>分)
+                      </div><br/>
+                      <div class="news-text">
+                        <input class="icheck" style="position: relative;" type="radio" name="<%= problem._id %>" value="1" /><label for="iradio2" class="">Ture</label>
+                        <br/>
+                        <input class="icheck" style="position: relative;" type="radio" name="<%= problem._id %>" value="0" /><label for="iradio2" class="">False</label>
+                      </div>
+                    </div>
+                  </div>
+                <% }} %>
+                </br>
+                <ul class="padded separate-sections">
+                  <input class="btn btn-default", type='submit', value='确认提交'/>
+                </ul>
+                </div>
+              </form>
+          </div>
+
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

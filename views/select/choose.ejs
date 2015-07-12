@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+  <% include ../head.html %>
+</head>
+<body>
+	<% include ../navbar.html%>
+	<div class="span12" style="margin-top:20px">
+		<div class="box">
+		  <div class="box-header">
+	        <span class="title">课程列表</span>
+	        <ul class="box-toolbar">
+	          <li>
+				<span class="label label-blue">
+				  课程名称：<%= course_name%>&nbsp;&nbsp;&nbsp;学分：<%= credits%>
+				</span>
+			  </li>
+	        </ul>
+	      </div>
+	      <div class="box-content padded">
+		  	<form name="choose_course" id="choose_course" method="post" action="/select/choose_course/<%=course_id%>">
+			 <table width="100%" class="table table-normal" style="text-align:center;">
+              <thead>
+                <tr>
+                  <td>教师</td>
+                  <td>上课时间</td>
+                  <td>校区</td>
+                  <td>教室</td>
+				  <td>余量/容量</td>
+				  <td>待定人数</td>
+				  <td>选课</td>
+                </tr>
+              </thead>
+              <tbody>
+			  <% for(var i=0;i<course.length;i++){%>
+			  <tr>
+				  <td><%=course[i].teacher %></td>
+				  <td><%=course[i].time %></td>
+				  <td><%=course[i].campus %></td>
+				  <td><%=course[i].room %></td>
+				  <td><%=course[i].remain %>/<%=course[i].all%></td>
+				  <td><%=course[i].waiting %></td>
+				  <td>
+					<input type="radio" name="choose" class="icheck" id="iradio<%=i%>" value="<%=course[i]._id%>">
+				  </td>
+			  </tr>
+			  <%}%>
+              </tbody>  
+             </table>
+             <div style="width:100%;height:20px"></div>
+			 <div class="form-group" style="display:inline;padding-top:20px;">
+              <label class="control-label col-lg-2" style="float:left;padding-top:5px;">分配点数：</label>
+              <div class="col-lg-10">
+              	<select class="uniform" name="points" id="points">
+              		<option value="0">0</option>
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+					<option value="25">25</option>
+					<option value="30">30</option>
+					<option value="35">35</option>
+					<option value="40">40</option>
+					<option value="45">45</option>
+					<option value="50">50</option>
+				</select>
+				/<%=remain_points%>
+              </div>
+            </div>
+			 <div style="width:100%;text-align:center; padding-top:10px;">
+				 <button  type="button" onclick="submit_choose()" class="btn btn-blue" style="width:80px;">提交</button>
+			 </div>
+			</form>
+		  </div>
+		</div>
+	</div>
+	<div class="span12" style="margin-top:20px">
+		<div class="box">
+		  <div class="box-header">
+	        <span class="title">我的志愿</span>
+	        <ul class="box-toolbar">
+	          <li>
+				<span class="label label-blue">
+				  课程名称：<%= course_name%>&nbsp;&nbsp;&nbsp;学分：<%= credits%>
+				</span>
+			  </li>
+	        </ul>
+	      </div>
+		  <div class="box-content padded">
+			 <form name="cancel_input" id="cancel_input" action="/select/choose_course/<%=course_id %>" method="post">
+			 <table width="100%" class="table table-normal" style="text-align:center;">
+              <thead>
+                <tr>
+                  <td>教师</td>
+                  <td>上课时间</td>
+                  <td>校区</td>
+                  <td>教室</td>
+				  <td>余量/容量</td>
+				  <td>待定人数</td>
+				  <td>分配点数</td>
+                </tr>
+              </thead>
+              <%if(my_choice>=0) {%>
+              <tbody>
+			  <tr>
+				  <td><%=course[my_choice].teacher %></td>
+				  <td><%=course[my_choice].time %></td>
+				  <td><%=course[my_choice].campus %></td>
+				  <td><%=course[my_choice].room %></td>
+				  <td><%=course[my_choice].remain %>/<%=course[my_choice].all%></td>
+				  <td><%=course[my_choice].waiting %></td>
+				  <td><%=old_point %></td>
+			  </tr>
+              </tbody> 
+              <%}%> 
+             </table>
+             <%if(my_choice>=0) {%>
+             <div hidden=""><input type="text" name="cancel_course" value="<%=course[my_choice]._id%>"></div>
+			 <div style="width:100%;text-align:center; padding-top:10px;">
+				 <button type="submit" class="btn btn-blue" style="width:80px;">退课</button>
+			 </div>
+			 <%}%>
+			 </form>
+		  </div>
+		</div>
+	</div>
+<script type="text/javascript">
+function error_detection(){
+	<%if(error!=""){%>
+ 		alert("<%=error%>");	
+  	<%}%>
+}
+error_detection();
+function submit_choose(){
+	var choice=document.getElementsByName('choose');
+	for(var i=0;i<choice.length;i++){
+		if(choice[i].checked) break;
+	}
+	console.log(i);
+	if(i==choice.length) {
+		alert("请选择志愿!");
+		return;
+	}
+	var points=document.getElementById("points").value;
+	if(points==0){
+		alert("分配点数不能为0!");
+		return;
+	}
+	document.getElementById("choose_course").submit();
+}
+</script>
+</body>

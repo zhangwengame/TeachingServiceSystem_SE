@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../head.html %>
+  </head>
+  <body>
+    <!-- 上方选择条 navbar-top-->
+    <% include ../navbar.html %>
+    <!-- 侧边框 -->
+    <% include slide_teacher.html%> 
+
+    <script type="text/javascript">
+     function addMul() {
+      document.getElementById('mulchoice').style.display = ("block");
+      document.getElementById('judge').style.display = ("none");
+     }
+     function addJud() {
+      document.getElementById('mulchoice').style.display = ("none");
+      document.getElementById('judge').style.display = ("block");
+     }
+     function EditMode(id){
+      document.getElementById('pro_' + id).style.display = ("none");
+      document.getElementById('pro_edit_' + id).style.display = ("block");
+     }
+     function NoEditMode(id){
+      document.getElementById('pro_' + id).style.display = ("block");
+      document.getElementById('pro_edit_' + id).style.display = ("none");
+     }
+    </script>
+
+    <div class="main-content">
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="area-top clearfix">
+            <div class="pull-left header">
+              <h3 class="title"><i class="icon-edit"></i>题库管理</h3>
+              <h5>添加选择题/判断题，编辑或删除题库中的题目</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span12">
+        <div class="box">
+          <div class="box-header">
+            <div class="title">添加题目</div>
+          </div>
+          <div class="box-content">
+            <button type="button" onclick="addMul()" class="btn btn-default" name="addJudButton">添加选择题</button>
+            <button type="button" onclick="addJud()" class="btn btn-default" name="addMulButton">添加判断题</button>
+            <div id="mulchoice" style="display:none;">
+              <form method='post'>
+                <div class="col-lg-6">
+                  <ul class="padded separate-sections">
+                  <p><input type='text', name='stem', placeholder='题干'/></p>
+                  <p><input type='text', name='choice1', placeholder='选项A'/>  <input class="icheck", type='radio', name='answer', value="1"></p>
+                  <p><input type='text', name='choice2', placeholder='选项B'/>  <input class="icheck", type='radio', name='answer', value="2"></p>
+                  <p><input type='text', name='choice3', placeholder='选项C'/>  <input class="icheck", type='radio', name='answer', value="3"></p>
+                  <p><input type='text', name='choice4', placeholder='选项D'/>  <input class="icheck", type='radio', name='answer', value="4"></p>
+                  <p><select class="uniform", name='point'>
+                          <option value="1">
+                            1分题
+                          </option>
+                          <option value="2">
+                            2分题
+                          </option>
+                          <option value="3">
+                            3分题
+                          </option>
+                        </select>
+                  </p>
+                  <p><input type='submit', value='提交', class="btn btn-default"/></p>
+                  </ul>
+                </div>
+              </form>
+            </div>
+            <div id="judge" style="display:none;">
+              <form method='post'>
+                <div class="col-lg-6">
+                  <ul class="padded separate-sections">
+                    <p><input type='textarea', name='stem', placeholder='题干'/></p>
+                    
+                    <p><select class="uniform", name='answer'>
+                          <option value="1">
+                            True
+                          </option>
+                          <option value="0">
+                            False
+                          </option>
+                        </select>
+                    </p>
+                    <p><select class="uniform", name='point'>
+                          <option value="1">
+                            1分题
+                          </option>
+                          <option value="2">
+                            2分题
+                          </option>
+                          <option value="3">
+                            3分题
+                          </option>
+                        </select>
+                    </p>
+                    <p><input type='submit', value='提交', class="btn btn-default"/></p>
+                  </ul>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="span12">
+        <div class="box">
+          <div class="box-header">
+            <div class="title">题库题目</div>
+          </div>
+          <div class="box-content scrollable" style="height: 480px;overflow-y: auto">
+             <ul>
+              <% for(var i = 0; i < problems.length; i++){
+                  var problem = problems[i];
+                  if(problem.type == 0){
+              %>
+                <li>
+                  <div id="pro_<%= problem._id %>", style="display:block;">
+                    <%= problem.stem %>(<%= problem.point %>分)
+                    <br/>
+                    <% if (problem.answer==1){ %>
+                      <b><i>A.<%= problem.choice[0] %></i></b>
+                    <% }else{ %>
+                      A.<%= problem.choice[0] %>
+                    <% } %>
+                    </br>
+                    <% if (problem.answer==2){ %>
+                      <b><i>A.<%= problem.choice[1] %></i></b>
+                    <% }else{ %>
+                      A.<%= problem.choice[1] %>
+                    <% } %>
+                    </br>
+                    <% if (problem.answer==3){ %>
+                      <b><i>A.<%= problem.choice[2] %></i></b>
+                    <% }else{ %>
+                      A.<%= problem.choice[2] %>
+                    <% } %>
+                    </br>
+                    <% if (problem.answer==4){ %>
+                      <b><i>A.<%= problem.choice[3] %></i></b>
+                    <% }else{ %>
+                      A.<%= problem.choice[3] %>
+                    <% } %>
+                    </br>
+                    <a class="btn btn-blue", href="/OnlineTest/probManage/delete/<%= problem._id %>">删除</a>
+                    <button type="button" onclick="EditMode('<%= problem._id %>')" class="btn btn-default" name="addMulButton">编辑</button>
+                  </div>
+                  <div id="pro_edit_<%= problem._id %>", style="display:none;">
+                    <form method='post'>
+                      <div class="col-lg-6">
+                        <ul class="padded separate-sections">
+                        <input type='text', name='pro_id', value = '<%= problem._id %>', style="display:none;">
+                        <p><input type='text', name='stem_edit', placeholder='题干', value = '<%= problem.stem %>'/></p>
+                        <p><input type='text', name='choice1', placeholder='选项A', value = '<%= problem.choice[0] %>'/>  <input class="icheck", type='radio', name='answer', value="1"></p>
+                        <p><input type='text', name='choice2', placeholder='选项B', value = '<%= problem.choice[1] %>'/>  <input class="icheck", type='radio', name='answer', value="2"></p>
+                        <p><input type='text', name='choice3', placeholder='选项C', value = '<%= problem.choice[2] %>'/>  <input class="icheck", type='radio', name='answer', value="3"></p>
+                        <p><input type='text', name='choice4', placeholder='选项D', value = '<%= problem.choice[3] %>'/>  <input class="icheck", type='radio', name='answer', value="4"></p>
+                        <p><select class="uniform", name='point'>
+                                <option value="1">
+                                  1分题
+                                </option>
+                                <option value="2">
+                                  2分题
+                                </option>
+                                <option value="3">
+                                  3分题
+                                </option>
+                              </select>
+                        </p>
+                        <p><input type='submit', value='提交修改', class="btn btn-default"/></p>
+                        <button type="button" onclick="NoEditMode('<%= problem._id %>')" class="btn btn-default" name="addMulButton">撤销修改</button>
+                        </ul>
+                      </div>
+                    </form>
+                  </div>
+                </li>
+                <%} else{%>
+                <li>
+                  <div id="pro_<%= problem._id %>", style="display:block;">
+                    <%= problem.stem %>(<%= problem.point %>分)
+                    <% if (problem.answer==1){ %>
+                      <b><i>T</i></b>
+                    <% }else{ %>
+                      <b><i>F</i></b>
+                    <% } %>
+                    <br/>
+                    <a class="btn btn-blue", href="/OnlineTest/probManage/delete/<%= problem._id %>">删除</a>
+                    <button type="button" onclick="EditMode('<%= problem._id %>')" class="btn btn-default" name="addMulButton">编辑</button>
+                  </div>
+                  <div id="pro_edit_<%= problem._id %>", style="display:none;">
+                    <form method='post'>
+                      <div class="col-lg-6">
+                        <ul class="padded separate-sections">
+                          <input type='text', name='pro_id', value = '<%= problem._id %>', style="display:none;">
+                          <p><input type='textarea', name='stem_edit', placeholder='题干', value = '<%= problem.stem %>'/></p>
+                          
+                          <p><select class="uniform", name='answer'>
+                                <option value="1">
+                                  True
+                                </option>
+                                <option value="0">
+                                  False
+                                </option>
+                              </select>
+                          </p>
+                          <p><select class="uniform", name='point'>
+                                <option value="1">
+                                  1分题
+                                </option>
+                                <option value="2">
+                                  2分题
+                                </option>
+                                <option value="3">
+                                  3分题
+                                </option>
+                              </select>
+                          </p>
+                          <p><input type='submit', value='提交修改', class="btn btn-default"/>
+                          <button type="button" onclick="NoEditMode('<%= problem._id %>')" class="btn btn-default" name="addMulButton">撤销修改</button></p>
+                        </ul>
+                      </div>
+                    </form>
+                  </div>
+                </li>
+              <% }} %>
+            </ul> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

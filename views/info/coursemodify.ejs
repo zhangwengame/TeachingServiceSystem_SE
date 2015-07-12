@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+<head>
+<% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include slide_info.html%>
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('infomanage');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('coursemodify');
+            slide.className='active';
+   }
+
+     setNavActive();
+     setSlideActive();
+</script>
+
+<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-search"></i>修改课程</h3>
+          <h5>填写课程信息</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 信息填写 -->
+  <div class="span12" style="width:900px">
+    <div class="box">
+      <div class="box-header">
+        <span class="title">信息填写</span>
+      </div>
+      <form name="input" action="/info/coursemodify" method="post">
+        <div class="box-content padded">
+          <div class="row-fluid">
+            <div class="span9">
+            <!-- 条件选框 -->
+              <ul>
+                <li class="input">
+                  <label>课程唯一id</label>
+                  <input type="text" style="width:215px;" placeholder="e.g. 557c5cb64adcaa9d1ef8b273" name="courseid" value=<%= data.courseid %>>
+                  <font color="red"><%= courseidErr %></font>
+                </li>
+                
+                <li class="input">
+                  <label>课程名称</label>
+                  <input type="text" style="width:215px;" placeholder="e.g. 软件工程" name="coursename" value=<%= data.coursename %>>
+                  <font color="red"><%= coursenameErr %></font>
+                </li>
+
+                <li class="input" style="margin-top:-65px; margin-left:360px">
+                  <label>课程ID</label>
+                  <input type="text" style="width:215px;" placeholder="e.g. 1234" name="courseid2" value=<%= data.courseid2 %>>
+                  <font color="red"><%= courseid2Err %></font>
+                </li>
+                
+                <li class="input">
+                  <label>授课老师</label>
+                  <input type="text" style="width:215px;" placeholder="e.g. 王章野" name="teacher" value=<%= data.teacher %>>
+                  <font color="red"><%= teacherErr %></font>
+                </li>
+                
+                <li class="input" style="margin-top:-65px; margin-left:360px">
+                  <label>开课学院</label>
+                  <input type="text" style="width:215px;" placeholder="e.g. 计算机学院" name="college" value=<%= data.college %>>
+                  <font color="red"><%= collegeErr %></font>
+                </li>
+                
+                <li class="input">
+                  <label>课程年份</label>
+                  <select name="year">
+                    <option value="2007-2008">2007-2008</option>
+                    <option value="2008-2009">2008-2009</option>
+                    <option value="2009-2010">2009-2010</option>
+                    <option value="2010-2011">2010-2011</option>
+                    <option value="2011-2012">2011-2012</option>
+                    <option value="2012-2013">2012-2013</option>
+                    <option value="2013-2014">2013-2014</option>
+                    <option value="2014-2015">2014-2015</option>
+                    <option value="2015-2016" selected="selected">2015-2016</option>
+                    <option value="2016-2017">2016-2017</option>
+                  </select>
+                </li>
+                
+                <li class="input" style="margin-top:-65px; margin-left:360px">
+                  <label>课程学期</label>
+                  <select name="courseterm">
+                    <option value="春" selected="selected">春</option>
+                    <option value="夏">夏</option>
+                    <option value="秋">秋</option>
+                    <option value="冬">冬</option>
+                    <option value="春夏">春夏</option>
+                    <option value="秋冬">秋冬</option>
+                  </select>
+                </li> 
+                
+                <li class="input">
+                  <label>课程学分</label>
+                  <select name="coursescore">
+                    <option value="0.5">0.5</option>
+                    <option value="1.0">1.0</option>
+                    <option value="1.5">1.5</option>
+                    <option value="2.0" selected="selected">2.0</option>
+                    <option value="2.5">2.5</option>
+                    <option value="3.0">3.0</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4.0">4.0</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5.0">5.0</option>
+                  </select>
+                </li>
+                
+                <li class="input" style="margin-top:-65px; margin-left:360px">
+                  <label>考试时间</label>
+                  <input type="text" style="width:215px;" placeholder="e.g. 2015.07.01 8:00-10:00" name="examtime" value=<%= data.examtime %>>
+                  <font color="red"><%= examtimeErr %></font>
+                </li>
+                
+                <li class="input">
+                  <label>上课校区</label>
+                  <select name="campus">
+                    <option value="紫金港校区" selected="selected">紫金港校区</option>
+                    <option value="玉泉校区">玉泉校区</option>
+                    <option value="西溪校区">西溪校区</option>
+                    <option value="之江校区">之江校区</option>
+                    <option value="华家池校区">华家池校区</option>
+                    <option value="舟山校区">舟山校区</option>
+                  </select>
+                </li>
+                
+                <li class="input" style="margin-top:-65px; margin-left:360px">
+                  <label>上课教室</label>
+                  <input type="text" style="width:215px;" placeholder="e.g. 教7-602" name="room" value=<%= data.room %>>
+                  <font color = "red"><%= roomErr %></font> 
+                </li>
+                
+                <li class="input" style="margin-top:10px;">
+                  <label>课程容量&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="e.g. 100" style="WIDTH: 30px;" name="all" value=<%= data.all %>></label>
+                  <label style="margin-top:-42px; margin-left:120px">课程余量&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="e.g. 100" style="WIDTH: 30px;" name="remain" value=<%= data.remain %>></label>
+                  <label style="margin-top:-42px; margin-left:240px">待选人数&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="e.g. 0" style="WIDTH: 30px;" name="waiting" value=<%= data.waiting %>></label>
+                </li>
+                
+                <li>
+                  <label>课程时间（全不选则为均可）:</label>
+                  <table id="user" class="table table-normal">
+                    <thead>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>周一</td>
+                        <td>周二</td>
+                        <td>周三</td>
+                        <td>周四</td>
+                        <td>周五</td>
+                        <td>周六</td>
+                        <td>周日</td>
+                      </tr>
+                    </thead>
+                       <tr>
+                        <td>1、2节</td>
+                        <td><input type="checkbox" class="icheck" id="icheck1" name="time" value="11"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck2" name="time" value="21"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck3" name="time" value="31"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck4" name="time" value="41"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck5" name="time" value="51"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck6" name="time" value="61"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck7" name="time" value="71"></td>
+                      </tr>
+                      <tr>
+                        <td>3、4、5节</td>
+                        <td><input type="checkbox" class="icheck" id="icheck12" name="time" value="12"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck22" name="time" value="22"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck32" name="time" value="32"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck42" name="time" value="42"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck52" name="time" value="52"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck62" name="time" value="62"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck72" name="time" value="72"></td>
+                      </tr>
+                      <tr>
+                        <td>6、7、8节</td>
+                        <td><input type="checkbox" class="icheck" id="icheck13" name="time" value="13"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck23" name="time" value="23"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck33" name="time" value="33"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck43" name="time" value="43"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck53" name="time" value="53"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck63" name="time" value="63"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck73" name="time" value="73"></td>
+                      </tr>
+                      <tr>
+                        <td>9、10节</td>
+                        <td><input type="checkbox" class="icheck" id="icheck14" name="time" value="14"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck24" name="time" value="24"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck34" name="time" value="34"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck44" name="time" value="44"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck54" name="time" value="54"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck64" name="time" value="64"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck74" name="time" value="74"></td>
+                      </tr>
+                       <tr>
+                        <td>晚上</td>
+                        <td><input type="checkbox" class="icheck" id="icheck15" name="time" value="15"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck25" name="time" value="25"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck35" name="time" value="35"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck45" name="time" value="45"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck55" name="time" value="55"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck65" name="time" value="65"></td>
+                        <td><input type="checkbox" class="icheck" id="icheck75" name="time" value="75"></td>
+                      </tr>
+                    <tbody>
+                    </tbody>                  
+                  </table>
+                </li>
+              </ul>
+              </div>
+            </div>
+            <button type="submit" style="margin-left:26px" class="btn btn-blue">修改</button>
+          </div>
+        </div>
+      </form>
+      </div>
+
+      <!-- 修改结果 -->
+      <div class="span10" style="width:900px">
+        <div class="box">
+          <div class="box-header">
+            <span class="title">修改结果</span>
+          </div>
+          <p><span><%= modifyresult %></span></p>
+        </div>
+      </div>
+    </div>
+</div>
+
+</body>
+</html>

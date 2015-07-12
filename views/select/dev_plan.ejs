@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+  <% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<%if(type==0) {%>
+<% include slide.html%>
+<% }%>
+<%if(type==1) {%>
+<% include slide_teacher.html%>
+<% }%>
+<%if(type==2) {%>
+<% include slide_manager.html%>
+<% }%>
+<!--侧边框结束-->
+<script type="text/javascript">
+  function setActive(){
+    console.log('dev_plan');
+    var active=document.getElementById('dev_plan');
+    active.className='active';
+  }
+  setActive();
+</script>
+<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-dashboard"></i>培养方案</h3>
+          <h5>查看本专业培养方案</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 个人课表 -->
+  <div class="span10">
+    <div class="box">
+      <div class="box-header">
+        <span class="title">专业培养方案</span>
+      </div>
+      <div class="box-content scrollable" style="height: 1000px; overflow-y:auto"> 
+        <!-- 通识课部分 -->
+       <div class="span9" style="margin-top:20px;">
+          <form name="input" action="/select/dev_plan" method="post">
+              <div class="input" style="display:inline; text-align:center;">
+                  <label style="float:left; margin-top:5px;">专业名称:&nbsp;</label>
+                  <select class="uniform" name="major_name">
+                      <% for(var i=0;i<major.length;i++){%>
+                      <option value="<%= major[i]%>"><%= major[i]%></option>
+                      <% } %>
+                  </select>
+                  <button type="submit" class="btn btn-blue" style="margin-left:30px;">搜索</button>
+              </div>
+          </form>
+        </div>
+        <div class="span9" style="margin-top:20px;">
+          <div class="box">
+             <div class="box-header">
+                <span class="title">通识课部分</span>
+              </div>
+              <div class="box-content padded">
+                <table width="100%" class="table table-normal" style="text-align:center;">
+                  <thead>
+                    <tr>
+                      <td style="width:70%">通识课所属类别</td>
+                      <td style="width:30%">毕业最低学分</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for(var i=0;i<dev_plan_gen.length;i++){%>
+                    <tr>
+                      <td><%= dev_plan_gen[i].name %></td>
+                      <td><%= dev_plan_gen[i].min_credits %></td>
+                    </tr>
+                    <%}%>
+                  </tbody>  
+                 </table>
+              </div>
+          </div>
+        </div>
+        <!-- 专业必修课部分 -->
+        <div class="span9" style="margin-top:20px;">
+          <div class="box">
+             <div class="box-header">
+                <span class="title">专业必修课部分</span>
+              </div>
+              <div class="box-content padded">
+                <table width="100%" class="table table-normal" style="text-align:center;">
+                      <thead>
+                        <tr>
+                          <td style="width:20%">课程序号</td>
+                          <td style="width:35%">课程名称</td>
+                          <td style="width:15%">推荐完成学期</td>
+                          <td style="width:20%">课程学分</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(var i=0;i<dev_plan_req.length;i++){%>
+                        <tr>
+                          <td><%= dev_plan_req[i].ID %></td>
+                          <td><a href="/select/course/<%= dev_plan_req[i].ID%>" target="view_window"><%= dev_plan_req[i].name %></a></td>
+                          <td><%= dev_plan_req[i].time %></td>
+                          <td><%= dev_plan_req[i].credit %></td>
+                        </tr>
+                        <%}%>
+                      </tbody>  
+                     </table>
+              </div>
+          </div>
+        </div>
+        <!-- 专业选修课部分 -->
+        <div class="span9" style="margin-top:20px;">
+          <div class="box">
+             <div class="box-header">
+                <span class="title">专业选修课部分</span>
+              </div>
+              <div class="box-content padded">
+                <ul>
+                  <% for(var i=0;i<dev_plan_elec_class.length;i++){%>
+                  <li style="margin-bottom:25px;">
+                    <span><%=dev_plan_elec_class[i].classification%>
+                    </span>
+                    <table width="100%" class="table table-normal" style="text-align:center;">
+                      <thead>
+                        <tr>
+                          <td style="width:20%">课程序号</td>
+                          <td style="width:35%">课程名称</td>
+                          <td style="width:15%">推荐完成学期</td>
+                          <td style="width:20%">课程学分</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(var j=0;j<dev_plan_elec[i].length;j++){%>
+                        <tr>
+                          <td><%= dev_plan_elec[i][j].ID %></td>
+                          <td><a href="/select/course/<%= dev_plan_elec[i][j].ID%>" target="view_window"><%= dev_plan_elec[i][j].name %></a></td>
+                          <td><%= dev_plan_elec[i][j].time %></td>
+                          <td><%= dev_plan_elec[i][j].credit %></td>
+                        </tr>
+                        <%}%>
+                      </tbody>  
+                     </table>
+                  </li>
+                  <%}%>
+                </ul>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 主要内容的js -->
+<script type="text/javascript">
+</script>
+</body>
+</html>

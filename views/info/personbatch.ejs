@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include slide_info.html%>
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('infomanage');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('personbatch');
+            slide.className='active';
+   }
+
+     setNavActive();
+     setSlideActive();
+</script>
+
+<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-search"></i>批量插入用户</h3>
+          <h5>上传文件</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 信息填写 -->
+  <div class="span12" style="width:900px">
+    <div class="box">
+      <div class="box-header">
+        <span class="title">文件加载</span>
+      </div>
+      <form method="post" enctype="multipart/form-data" action="/info/personbatch">
+        <div class="box-content padded">
+          <div class="row-fluid">
+            <div class="span9">
+              <ul>
+               <div id="uniform-fulAvatar" class="uploader"  style="width:220px;border:none">
+                <input id="filePic" name="filePic" style="background: #707070" size="22" class="form-control" type="file">
+              </div>
+            </ul>
+          </div>
+          </div>
+          <button type="submit" style="margin-left:26px" class="btn btn-blue">添加</button>
+          </div>
+        </div>
+        </form>
+      </div>
+
+      <!-- 删除结果 -->
+      <div class="span10" style="width:900px">
+        <div class="box">
+          <div class="box-header">
+            <span class="title">添加结果</span>
+          </div>
+          <form action="/persondelect" role="form" method="post">
+          <p><span><%= insertresult %></span></p>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+</body>
+</html>

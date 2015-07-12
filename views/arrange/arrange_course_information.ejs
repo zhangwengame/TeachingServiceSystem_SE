@@ -1,0 +1,102 @@
+<!doctype html>
+<% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<%if(type==0) {%>
+<% include slidebar_student.html%>
+<% }%>
+<%if(type==1) {%>
+<% include slidebar_teacher.html%>
+<% }%>
+<%if(type==2) {%>
+<% include arrange_slidebar.html%>
+<% }%>
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('arrange');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('arrange_course_information');
+            slide.className='active';
+   }
+
+     setNavActive();
+     setSlideActive();
+</script>
+
+<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-reorder"></i>课程信息查询</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="span10">
+<div class="box">
+  <div class="box-header">
+    <span class="title">课程信息</span>
+        <ul class="box-toolbar">
+          <li class="dropdown">
+            <button class="btn btn-blue dropdown-toggle" data-toggle="dropdown">搜索课程<span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <div class="box-content padded">
+                <form class="separate-sections" method="post" action="queryInfo">
+                  <input type="text" name="ID" placeholder="课程名">
+                  <input type="text" name="catagory" placeholder="课程号">
+                  <button type="submit" class="btn btn-blue btn-block">提交</button>
+                </form>
+              </div>
+            </ul>
+          </li>
+        </ul>
+  </div>
+  <div class="box-content">
+    <table class="table table-normal">
+      <thead>
+      <tr>
+        <td>课程号</td>
+        <td>课程名</td>
+        <td>上课时间</td>
+        <td>学期</td>
+        <td>上课地点</td>
+        <td>教学班人数</td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr class="status-pending">
+        <td>MC001</a></td>
+        <td>微积分1</td>
+        <td>周三1、2节</td>
+        <td>春夏</td>
+        <td>曹楼201</td>
+        <td>90</td>
+      </tr>
+      <tr class="status-pending">
+        <td>MC002</a></td>
+        <td>微积分2</td>
+        <td>周三3、4节</td>
+        <td>春夏</td>
+        <td>曹楼201</td>
+        <td>90</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+
+</div>
+</body>
+</html>

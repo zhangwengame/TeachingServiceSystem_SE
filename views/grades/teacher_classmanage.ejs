@@ -1,0 +1,286 @@
+<!doctype html>
+<% include ../head.html %>
+<script src="/javascripts/echarts/dist/echarts.js"></script>
+</head>
+<body >
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include teacher_slide.html%>
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('grades');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('classManagement');
+            slide.className='active';
+   }
+
+     setNavActive();
+     setSlideActive();
+</script>
+
+<script type="text/javascript">
+
+function checknum(formid)
+{
+    var score = document.getElementById('s_' + formid)
+    var re = /^[0-9]*[0-9][0-9]*$/ ;
+    console.log("找你呢");
+    console.log(score.value);
+    if(!(re.test(score.value) && parseInt(score.value)<=100 && parseInt(score.value)>=0))
+    {
+        alert("必须是0-100的数字");
+    }
+    else{
+        document.getElementById(formid).submit();
+    }
+}    
+
+
+function checknum2(formid){
+    var score = document.getElementById('s_' + formid);
+    var re = /^[0-9]*[0-9][0-9]*$/ ;
+    console.log("找你呢");
+    console.log(score.value);
+    if(!(re.test(score.value) && parseInt(score.value)<=100 && parseInt(score.value)>=0))
+    {
+        alert("必须是0-100的数字");
+    }
+    else{
+        input_reason(formid);
+    }
+}
+    
+    
+function disp_alert()
+{
+        if (!confirm("确认提交？提交后再次修改需要向管理员申请")) { 
+            window.event.returnValue = false; 
+        } 
+    
+}
+function input_reason(formid, score)
+{
+    var reason = document.getElementById('r_' + formid);
+    reason.value = prompt("请输入申请理由 ","");
+    document.getElementById(formid).submit();
+}
+function show_warning(){
+    if(<%=warning%>) {
+        alert("申请失败,请不要在同一门课上对同一位同学的成绩多次修改!");
+    }
+}
+window.onload = show_warning;
+</script>
+  <script type="text/javascript">
+        require.config({
+            paths: {
+                echarts:  '/javascripts/echarts/dist'
+            }
+        });
+        require(
+            [
+                'echarts',
+                'echarts/chart/line',   // 按需加载所需图表，如需动态类型切换功能，别忘了同时加载相应图表
+                'echarts/chart/bar'
+            ],
+            function (ec) {
+                var myChart = ec.init(document.getElementById('main'));
+            var   option = {
+    title : {
+        text: '班级成绩统计图',
+        subtext: '班级总人数:'+<%=data.length%>
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['成绩']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,   
+            data : ['0-10','10-20','20-30','30-40','40-50','50-60','60-70','70-80','80-90','90-100']
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            min:0,
+            max:30,
+            axisLabel : {
+                formatter: '{value} '
+            }
+        }
+    ],
+    series : [
+        {
+            name:'人数',
+            type:'line',
+            data:[<%=bar%>],
+            markPoint : {
+                data : [
+                
+                    { name : '平均值',value: <%=average%>,xAxis:<%=avgpos%>,yAxis:20},
+                    {name:'中位数',value:<%=medium%>,xAxis:<%=midpos%>,yAxis:15}
+                   
+                                   ]
+            },
+            markLine : {
+                data : [
+                    
+                ]
+            }
+        }
+
+    ]
+};
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+
+<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-search"></i>课程管理</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="span10">
+<div class="box">
+  <div class="box-header">
+    
+    <span class="title"><%=courses[0].coursename%></span>
+    <ul class="box-toolbar">
+      <%if(courses[0].status=="on"){%>
+      <li><span class="label label-green">进行中</span></li>
+       <%} else if(courses[0].status=="off"){%>
+       <li><span class="label label-red">已完结</span></li>
+        <%}%>
+    </ul>
+  </div>
+  <div class="box-content">
+    <table class="table table-normal">
+      <thead>
+      <tr>
+        <td>学号</td>
+        <td>姓名</td>
+        <td>专业</td>
+        <td>成绩</td>
+        <td style="width: 40px"></td>
+      </tr>
+      </thead>
+
+      <tbody>   
+       <% for(i=0;i<data.length;i++){%>
+      <form name="input" action="classManagement" id = "form_id<%=i%>" method="post">
+      <tr class="status-pending">
+        <td><%=studentslist[i].userid%></a></td>
+        <td><%=studentslist[i].username%></td>
+        <td><%=studentslist[i].major%></td>
+        <td><input type="text" name="score" id="s_form_id<%=i%>" value=<%=data[i].score%>></td>
+          <input type="hidden" name="oldvalue" value=<%=data[i].score%>>
+          <input type="hidden" name="courseid" value=<%=courses[0]._id%>>
+            <input type="hidden" name="userid" value=<%=studentslist[i].userid%>>
+        <td>
+            <input type="hidden" name = "coursestatus" value = <%=courses[0].status%> >
+            <input type="hidden" name = "reason" id = "r_form_id<%=i%>" value = "no reason" >
+          <div class="btn-group">
+            <%if(courses[0].status=="on"){%>
+            <button class="btn btn-xs btn-default dropdown-toggle" type="button" onClick="checknum('form_id<%=i%>')"><i class="icon-cog"> 修改</i></button>
+            <%} else if(courses[0].status=="off"){%>
+            <button class="btn btn-xs btn-default dropdown-toggle" type="button" onClick="checknum2('form_id<%=i%>')"><i class="icon-cog"> 提交申请</i></button>
+            <%}%>
+          </div>
+        </td>
+      </tr>
+      </form>
+      <%}%>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%if(courses[0].status=="on"){%>
+
+<form action="gradesSubmit" target="_blank" method="post"> 
+<input type="hidden" name="courseid" value=<%=courses[0]._id%>>
+<input class="btn btn-lg btn-green" type="submit" value="确认提交" onClick="disp_alert()" />
+</form>
+<%}%>
+  
+        <div class="box">
+        <div class="box-header"><span class="title">成绩修改申请记录</span></div>
+         <div class="box-content">
+         <div id="dataTables">
+
+          <table cellpadding="10" cellspacing="0" border="0" class="dTable responsive">
+          <thead>
+            <tr>
+
+              <th><div>学生学号</div></th>
+              <th><div>原成绩</div></th>
+              <th><div>修改后成绩</div></th>
+              <th><div>修改理由</div></th>
+              <th><div>状态</div></th>
+              <th><div>反馈</div></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(i = 0;i<motion.length;i++){ %>    
+            <tr>
+              <td><%= motion[i].studentid %></td>
+              <td><%= motion[i].oldvalue %></td>
+              <td><%= motion[i].newvalue %></td>
+              <td><%= motion[i].reason %></td>
+              <td><%= motion[i].status %></td>
+              <td><%= motion[i].feedback.comment %></td>
+           </tr>
+            <%}%> 
+          </tbody>
+          </table>
+         </div>
+       </div>
+      </div>
+  
+   <div class="col-md-4">
+    <div class="box">
+
+      <div class="box-header"><span class="title">chart</span></div>
+        <div id="main" style="height:400px"></div>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+ 
+
+
+
+
+</body>
+</html>

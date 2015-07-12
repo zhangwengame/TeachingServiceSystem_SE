@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>  
+    <% include ../head.html %>
+  </head>
+
+  <body>
+    <% include ../navbar.html %>
+    <% include slide_teacher.html %>
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row-fluid">
+              <div class="area-top clearfix">
+                <div class="pull-left header">
+                  <h3 class="title"><i class="icon-bar-chart"></i>统计分析</h3>
+                  <h5>选中某一张测试试卷添加分隔分数之后可以显示不同分数段的学生，或者打印这场考试的所有成绩</h5>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="span12">
+            <div class="box">
+                <div class="box-header">
+                    <div class="title">试卷列表</div>
+                </div>
+                <div class="box-content">
+                    <div class="col-lg-6">
+                        
+                        <ul class="padded separate-sections">
+                            <form method="post">
+                                <% for(var i = 0; i < titles.length; i++){ %>
+                                <li>
+                                <h5>
+                                    <%= titles[i] %>(总分: <%= totalpoints[i] %>)  <input type='radio', name='choosePaper', value="<%= i %>">
+                                </h5>
+                                </li>
+                                <% } %>
+                                <li>
+                                    <label>添加划分的分数分隔</label><div id="count"></div>
+                                </li>
+                                <div id="moreInput"></div>
+                                <button type='submit', class="btn btn-blue">显示图表</button>
+                            </form>
+                            <button class="btn btn-default", onclick="addInput()">添加分隔</button> 
+                            <button class="btn btn-default", onclick="printRecords()">打印成绩</button> 
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <div class="title"><%= titles[print_record] %>：成绩打印</div>
+                </div>
+                <div class="box-content">
+                    <div class="col-lg-6">
+                        <ul class="padded separate-sections">
+                        <% if(print_record != -1){ %>
+                            <% for(var i = 0; i < records.length; i++){ %>
+                                <% if(records[i].title == titles[print_record]){ %>
+                                <pre>学生学号：<%= records[i].student %>&#9;成绩：<%= records[i].point %>&#9;做题时间：<%= records[i].time %></pre>
+                                <% } %>
+                            <% } %>
+                        <% } %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <div class="title">图表显示</div>
+                </div>
+                <div class="box-content">
+                    <% include  echart.html %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        var i = 0;
+
+        function addInput()
+        {
+            var mf = document.getElementById("moreInput");
+            var counter = document.getElementById("count");
+            
+            var html = "<li><input type='text', style='margin-top:10px;', placeholder='输入分割分数线，如60', name='parag" + i + "'/></li>";
+            
+            i++;
+            counter.innerHTML = "<input type='text', value='" + i + "', name='counter', style='display:none;'/>";
+
+            mf.innerHTML += html;
+        }
+
+        function printRecords()
+        {
+            var chosen = document.getElementsByName("choosePaper");
+            
+            var chosenPaper;
+            for(var i = 0; i < chosen.length; i++){
+                if(chosen.item(i).checked){
+                    chosenPaper = i;
+                    break;
+                }
+                else{
+                    continue;
+                }
+            }
+
+            var url = "/OnlineTest/statistics/print/paper=" + chosenPaper;
+            window.location.href = url;
+        }
+    </script>
+  </body>

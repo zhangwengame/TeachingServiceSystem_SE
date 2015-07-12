@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+<head>
+    <% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include slide_info.html%>
+<script type="text/javascript">
+    function setNavActive(){
+        var active=document.getElementById('infomanage');
+        active.className='active';
+    }
+
+    function setSlideActive(){
+        var slide = document.getElementById('personmodify');
+        slide.className='active';
+    }
+
+    setNavActive();
+    setSlideActive();
+</script>
+
+<!-- 主要内容 -->
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="area-top clearfix">
+                <div class="pull-left header">
+                    <h3 class="title"><i class="icon-search"></i>修改用户</h3>
+                    <h5>填写用户信息</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 信息填写 -->
+    <div class="span12" style="width:900px">
+        <div class="box" style="width:900px">
+            <div class="box-header">
+                <span class="title">信息填写</span>
+            </div>
+            <form name="input" action="/info/personmodify" method="post" enctype="multipart/form-data">
+                <div class="box-content padded">
+                    <div class="row-fluid">
+                        <!--style>.span9 li{list-style:none}</style-->
+                        <div class="span9">
+                            <!-- 条件选框 -->
+
+                            <ul>
+                              <li class="input">
+                                  <label>从本地选择照片</label>
+                                  <div id="uniform-fulAvatar" class="uploader"  style="width:220px;border:none">
+                                      <input id="fulAvatar" name="fulAvatar" style="background: #707070" size="22" class="form-control" type="file">
+
+                                  </div>
+                              </li>
+                            <!--并不能预览
+                            <li class="input">
+                                  <label>照片预览</label>
+                            <span>
+                              <img class="menu-avatar" src="../imagestmp.jpg" width="300" height="300">
+                            </span>
+                              </li>-->
+                            <li class="input" style="margin-top:10px;">
+                              <label>学工号</label>
+                              <input type="text" style="width:215px" placeholder="e.g. 3120" name="userid" value=<%= data.userid %>>
+                              <font color="red"><%= useridErr %></font>
+                            </li>
+                            <li class="input" style="margin-top:-65px; margin-left:360px">
+                              <label>姓名</label>
+                              <input type="text" style="width:215px" placeholder="e.g. Tom" name="username" value=<%= data.username %>>
+                              <font color="red"><%= userNameErr %></font>
+                            </li>
+                            <li class="input">
+                              <label>密码</label>
+                              <input type="password" style="width:215px" placeholder="e.g. 123456" name="password1">
+                            </li>
+                            <li class="input" style="margin-top:-65px; margin-left:360px">
+                              <label >确认密码</label>
+                              <input type="password" style="width:215px" placeholder="e.g. 123456" name="password2">
+                              <font color="red"><%= passwordErr %></font>
+                            </li>
+                            
+                            <li class="input">
+                              <label>身份</label>
+                              <!--input type="text" placeholder="课程号" name="status"-->
+                              <select name="status">
+                                <optgroup lable="管理员">
+                                  <option value="系统管理员" title ="请确认您是否有相应权限">系统管理员</option>
+                                  <option value="教务管理员">教务管理员</option>
+                                </optgroup>
+                                <optgroup lable="用户">
+                                  <option value="教师">教师</option>
+                                  <option value="学生" selected="selected">学生</option>
+                                </optgroup>
+                              </select>
+                            </li>
+                            <li class="input" style="margin-top:-65px; margin-left:360px">
+                              <label>性别</label>
+                              <select name="sex">
+                                  <option value="男" selected="selected">男</option>
+                                  <option value="女">女</option>
+                              </select>
+                            </li>
+                            <!--li class="input" style="margin-bottom:10px">
+                              <label>课程</label>
+                              <textarea class="tags" placeholder="This is a textarea" id="tags1428302378316" style="display: none;" name="course_name">程序员</textarea>
+                            </li-->
+                            <li class="input">
+                              <label>年龄</label>
+                              <input type="text" style="width:215px" placeholder="e.g. 20" name="age" value=<%= data.age %>>
+                              <font color="red"><%= ageerr %></font>
+                            </li>
+                              <!--图片上传部分-->
+                            <li class="input" style="margin-top:-65px; margin-left:360px">
+                              <label>专业</label>
+                              <input type="text" style="width:215px" placeholder="e.g. 计算机科学与技术" name="major" value=<%= data.major %>>
+                            </li>
+                            <li class="input">
+                              <label>学院</label>
+                              <input type="text" style="width:215px" placeholder="e.g. 计算机学院" name="college" value=<%= data.college %>>
+                            </li>
+                            <li class="input" style="margin-top:-65px; margin-left:360px">
+                              <label>职称</label>
+                              <select name="title">
+                                <option value="无" selected="selected">无</option>
+                                <option value="讲师">讲师</option>
+                                <option value="副教授">副教授</option>
+                                <option value="教授">教授</option>
+                              </select>
+                            </li>
+                            <li class="input">
+                              <label>Tel</label>
+                              <input type="text" style="width:215px" placeholder="e.g. 18868101234" name="tel" value=<%= data.tel %>>
+                              <font color="red"><%= telerr %></font>
+                            </li>
+                            <li class="input" style="margin-top:-65px; margin-left:360px">
+                              <label>Email</label>
+                              <input type="text" style="width:215px" placeholder="e.g. email@zju.edu.cn" name="email" value=<%= data.email %>>
+                              <font color="red"><%= emailerr %></font>
+                            </li>
+                          </ul>
+                        </div>
+                    </div>
+                    <button type="submit" style="margin-left:26px" class="btn btn-blue">修改</button>
+                </div>
+        </div>
+        </form>
+    </div>
+
+    <!-- 修改结果 -->
+    <div class="span10" style="width:900px">
+        <div class="box">
+            <div class="box-header">
+                <span class="title">修改结果</span>
+            </div>
+            <p><span><%= modifyresult %></span></p>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>

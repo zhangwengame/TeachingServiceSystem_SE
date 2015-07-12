@@ -1,0 +1,393 @@
+<!doctype html>
+<html>
+<head>
+  <% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<%if(type==0) {%>
+<% include slide.html%>
+<% }%>
+<%if(type==1) {%>
+<% include slide_teacher.html%>
+<% }%>
+<%if(type==2) {%>
+<% include slide_manager.html%>
+<% }%>
+<!--侧边框结束-->
+<script type="text/javascript">
+  function setActive(){
+    console.log('dev_plan');
+    var active=document.getElementById('dev_plan');
+    active.className='active';
+  }
+  setActive();
+</script>
+<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-dashboard"></i>培养方案</h3>
+          <h5>查看本专业培养方案</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 培养方案 -->
+  <div class="span10">
+    <div class="box">
+      <div class="box-header">
+        <span class="title">专业培养方案</span>
+      </div>
+      <div class="box-content scrollable" style="height: 1000px; overflow-y:auto"> 
+        <!-- 通识课部分 -->
+       <div class="span9" style="margin-top:20px;">
+          <form name="input" action="/select/edit_dev_plan" method="post">
+              <div class="input" style="display:inline; text-align:center;">
+                  <label style="float:left; margin-top:5px;">专业名称:&nbsp;</label>
+                  <select class="uniform" name="major_name">
+                      <% for(var i=0;i<major.length;i++){%>
+                      <option value="<%= major[i]%>"><%= major[i]%></option>
+                      <% } %>
+                  </select>
+                  <button type="submit" class="btn btn-blue" style="margin-left:30px;">搜索</button>
+              </div>
+          </form>
+        </div>
+        <form name="form_gen" id="form_gen" method="post" action="/select/edit_dev_plan">
+        <div class="span9" style="margin-top:20px;">
+          <div class="box">
+             <div class="box-header">
+                <span class="title">通识课部分&nbsp;&nbsp;<a href="javascript:edit1()">编辑</a></span>
+              </div>
+              <div class="box-content padded">
+                <div hidden="">
+                  <input type="text" name="major_name" id="major_name1">
+                </div>
+                <table width="100%" class="table table-normal" style="text-align:center;">
+                  <thead>
+                    <tr>
+                      <td style="width:70%">通识课所属类别</td>
+                      <td style="width:30%">毕业最低学分</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for(var i=0;i<dev_plan_gen.length;i++){%>
+                    <tr>
+                      <td><%= dev_plan_gen[i].name %></td>
+                      <td id="gen<%=i%>"><%= dev_plan_gen[i].min_credits %></td>
+                    </tr>
+                    <%}%>
+                  </tbody>  
+                 </table>
+                 <div style="width:100%;text-align:center; margin-top:15px;" id="save1" hidden=""> 
+                     <button type="button" class="btn btn-blue" style="margin-left:30px;" onclick="save1()" \>
+                      保存
+                    </button>
+                 </div>
+              </div>
+          </div>
+        </div>
+        </form>
+        <!-- 专业必修课部分 -->
+        <div class="span9" style="margin-top:20px;">
+          <div class="box">
+             <div class="box-header">
+                <span class="title">专业必修课部分&nbsp;&nbsp;
+                  <a href="javascript:edit2()">编辑</a>
+                  <a href="javascript:addNew1()" id="add1" hidden="">添加</a>
+                  <a href="javascript:del1()" id="del1">删除</a>
+                </span>
+              </div>
+              <form name="form_req" id="form_req" method="post" action="/select/edit_dev_plan">
+              <div class="box-content padded">
+                <div hidden="">
+                  <input type="text" name="major_name" id="major_name2">
+                </div>
+                <table width="100%" class="table table-normal" style="text-align:center;">
+                      <thead>
+                        <tr>
+                          <td style="width:20%">课程序号</td>
+                          <td style="width:30%">课程名称</td>
+                          <td style="width:15%">推荐完成学期</td>
+                          <td style="width:20%">课程学分</td>
+                          <td style="width:5%" hidden="" id="reqbox"></td>
+                        </tr>
+                      </thead>
+                      <tbody id="req_table_body"> 
+                        <% for(var i=0;i<dev_plan_req.length;i++){%>
+                        <tr>
+                          <td id="req_id<%=i%>"><%= dev_plan_req[i].ID %></td>
+                          <td id="req_name<%=i%>"><%= dev_plan_req[i].name %></td>
+                          <td id="req_time<%=i%>"><%= dev_plan_req[i].time %></td>
+                          <td id="req_credit<%=i%>"><%= dev_plan_req[i].credit %></td>
+                          <td id="req_select<%=i%>" hidden="">
+                            <input type="checkbox" class="icheck" id="icheck<%=i%>" name="req_del" value="<%=dev_plan_req[i].ID%>">
+                          </td>
+                        </tr>
+                        <%}%>
+                      </tbody>  
+                     </table>
+                    <div style="width:100%;text-align:center; margin-top:15px;" id="save2" hidden=""> 
+                    <button type="button" class="btn btn-blue" style="margin-left:30px;" onclick="save2()" >
+                      保存
+                    </button>
+                    </div>
+                     <div style="width:100%;text-align:center; margin-top:15px;" id="del2" hidden=""> 
+                    <button type="button" class="btn btn-blue" style="margin-left:30px;" onclick="delreq2()" >
+                      删除
+                    </button>
+                    </div>
+              </div>
+              </form>
+          </div>
+        </div>
+        <!-- 专业选修课部分 -->
+        <div class="span9" style="margin-top:20px;">
+          <div class="box">
+             <div class="box-header">
+                <span class="title">专业选修课部分&nbsp;&nbsp;<a href="javascript:edit3()">编辑类别</a></span>
+              </div>
+              <div class="box-content padded">
+                <form name="form_elec_class" id="form_elec_class" method="post" action="/select/edit_dev_plan">
+                <div hidden="">
+                    <input type="text" name="major_name" id="major_name5" value="<%=major_name%>">
+                </div>
+                <div id="add_elec_class" style="width:100%;" hidden="">
+                 类型名称:&nbsp;&nbsp;
+                 <input type="text" placeholder="类型名称" name="new_class" style="margin-top:10px;">
+                 <select class="uniform" name="choice">
+                      <option value="add">添加</option>
+                      <option value="del">删除</option>
+                 </select>
+                 <button type="submit" class="btn btn-blue" style="margin-left:20px;">提交</button>
+                </div>
+                </form>
+                <ul>
+                  <% for(var i=0;i<dev_plan_elec_class.length;i++){%>
+                  <form name="form_elec_<%=i%>" id="form_elec_<%=i%>" method="post" action="/select/edit_dev_plan">
+                  <li style="margin-bottom:25px;">
+                    <span id="class<%=i%>"><%=dev_plan_elec_class[i].classification%>&nbsp;&nbsp;
+                    </span>
+                    <a href="javascript:edit4(<%=i%>)" id="add2_<%=i%>">编辑</a>
+                    <a href="javascript:addNew2(<%=i%>)" id="addNew2_<%=i%>" hidden="">添加</a>
+                      <a href="javascript:del2(<%=i%>)" id="del2_<%=i%>">删除</a>
+                    <div hidden="">
+                      <input type="text" placeholder="类型号" name="elec_class" value="<%=i%>">
+                    </div>
+                  <div hidden="">
+                    <input type="text" name="major_name" id="major_name3_<%=i%>">
+                  </div>
+                    <table width="100%" class="table table-normal" style="text-align:center;">
+                      <thead>
+                        <tr>
+                          <td style="width:20%">课程序号</td>
+                          <td style="width:30%">课程名称</td>
+                          <td style="width:15%">推荐完成学期</td>
+                          <td style="width:20%">课程学分</td>
+                          <td style="width:5%" id="elec_<%=i%>" hidden=""></td>
+                        </tr>
+                      </thead>
+                      <tbody id="elec_table_body_<%=i%>">
+                        <% for(var j=0;j<dev_plan_elec[i].length;j++){%>
+                        <tr>
+                          <td id="elec_id<%=i%>_<%=j%>"><%= dev_plan_elec[i][j].ID %></td>
+                          <td id="elec_name<%=i%>_<%=j%>"><%= dev_plan_elec[i][j].name %></td>
+                          <td id="elec_time<%=i%>_<%=j%>"><%= dev_plan_elec[i][j].time %></td>
+                          <td id="elec_credit<%=i%>_<%=j%>"><%= dev_plan_elec[i][j].credit %></td>
+                          <td id="elec_select<%=i%>_<%=j%>" hidden="">
+                            <input type="checkbox" class="icheck" id="icheck<%=i%>_<%=j%>" name="elec_del" value="<%=dev_plan_elec[i][j].ID %>">
+                          </td>
+                        </tr>
+                        <%}%>
+                      </tbody>  
+                     </table>
+                      <div style="width:100%;text-align:center; margin-top:15px;" id="save3_<%=i%>" hidden=""> 
+                      <button type="button" class="btn btn-blue" style="margin-left:30px;" onclick="save3(<%=i%>)">
+                        保存
+                      </button>
+                      </div>
+                      <div style="width:100%;text-align:center; margin-top:15px;" id="del3_<%=i%>" hidden=""> 
+                      <button type="button" class="btn btn-blue" style="margin-left:30px;" onclick="del3(<%=i%>)">
+                        删除
+                      </button>
+                      </div>
+                    </form>
+                  </li>
+                  <%}%>
+                </ul>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 主要内容的js -->
+<script type="text/javascript">
+function edit1(){
+  $("#save1").fadeIn();
+  <% for(var i=0;i<dev_plan_gen.length;i++){%>
+      document.getElementById("gen"+<%=i%>).innerHTML="<input type=\"text\" name=\"gen<%=i%>\" id=\"input<%=i%>\"value=\"<%= dev_plan_gen[i].min_credits%>\">";
+  <%}%>
+}
+function save1(){
+   var j=0;
+   var new_gen=[];
+  <% for(var i=0;i<dev_plan_gen.length;i++){%>
+      var tmp=document.getElementById("input"+<%=i%>).value;
+      if(tmp==""){
+        alert("学分不能为空!");
+        return;
+      }
+     else j++;
+     new_gen.push(tmp);
+  <%}%>
+  $("#save1").hide();
+  document.getElementById("major_name1").value= "<%=major_name%>";
+  if(j==<%=dev_plan_gen.length%>) document.getElementById("form_gen").submit();
+  
+}
+var req_length=<%=dev_plan_req.length%>;
+function edit2(){
+  $("#save2").fadeIn();
+  $("#add1").fadeIn();
+  $("#del1").fadeOut();
+  <% for(var i=0;i<dev_plan_req.length;i++){%>
+      document.getElementById("req_id"+<%=i%>).innerHTML="<input type=\"text\" name=\"reqIDinput\" id=\"reqIDinput<%=i%>\" value=\"<%= dev_plan_req[i].ID%>\" style=\"width:100%;\">";
+      document.getElementById("req_name"+<%=i%>).innerHTML="<input type=\"text\" name=\"reqNameinput\"  id=\"reqNameinput<%=i%>\" value=\"<%= dev_plan_req[i].name%>\" style=\"width:100%;\">";
+      document.getElementById("req_time"+<%=i%>).innerHTML="<input type=\"text\" name=\"reqTimeinput\"  id=\"reqTimeinput<%=i%>\" value=\"<%= dev_plan_req[i].time%>\" style=\"width:100%;\">";
+      document.getElementById("req_credit"+<%=i%>).innerHTML="<input type=\"text\" name=\"reqCreditinput\"  id=\"reqCreditinput<%=i%>\" value=\"<%= dev_plan_req[i].credit%>\" style=\"width:100%;\">";
+  <%}%>
+}
+function addNew1(){
+  var tmp=req_length;
+  var newReq="<tr><td id=\"req_id"+tmp+"\"><input type=\"text\" id=\"reqIDinput"+tmp+"\" name=\"reqIDinput\" style=\"width:100%;\"></td><td id=\"req_name"+tmp+"\"><input type=\"text\" id=\"reqNameinput"+tmp+"\" name=\"reqNameinput\" style=\"width:100%;\"></td><td id=\"req_time"+tmp+"\"><input type=\"text\" id=\"reqTimeinput"+tmp+"\" name=\"reqTimeinput\" style=\"width:100%;\"></td><td id=\"req_credit"+tmp+"\"><input type=\"text\" id=\"reqCreditinput"+tmp+"\" name=\"reqCreditinput\" style=\"width:100%;\"></td></tr>"
+  $("#req_table_body").append(newReq);
+  req_length++;
+}
+function save2(){
+  for(var i=0;i<req_length;i++){
+    console.log("reqIDinput"+i);
+    var tmp_id=document.getElementById("reqIDinput"+i).value;
+    var tmp_name=document.getElementById("reqNameinput"+i).value;
+    var tmp_time=document.getElementById("reqTimeinput"+i).value;
+    var tmp_credit=document.getElementById("reqCreditinput"+i).value;
+    if(tmp_id=="") {
+      alert("课程号不能为空!");
+      return;
+    }else if(tmp_name=="") {
+      alert("课程名不能为空!");
+      return;
+    }else if(tmp_time=="") {
+      alert("推荐学期不能为空!");
+      return;
+    }else if(tmp_credit=="") {
+      alert("课程学分不能为空!");
+      return;
+    }
+  }
+  document.getElementById("major_name2").value= "<%=major_name%>";
+  console.log("post");
+  $("#save2").hide();
+  $("add1").hide();
+  if(i==req_length) document.getElementById("form_req").submit();
+}
+function del1(){
+  $("#reqbox").fadeIn();
+  <% for(var i=0;i<dev_plan_req.length;i++){%>
+      $("#req_select<%=i%>").fadeIn();
+  <%}%>
+  document.getElementById("major_name2").value= "<%=major_name%>";
+  $("#del2").fadeIn();
+}
+function delreq2(){
+  document.getElementById("form_req").submit();
+}
+function edit3(){
+  $("#add_elec_class").fadeIn();
+}
+var dev_plan_elec=[];
+var dev_plan_elec_class=[];
+var dev_length=[];
+function data(){
+    <% for(var i=0;i<dev_plan_elec_class.length;i++){%>
+     var dev_plan_elec_tmp=[]; 
+     <% for(var j=0;j<dev_plan_elec[i].length;j++){%>
+
+      dev_plan_elec_tmp.push({elec_id:"<%=dev_plan_elec[i][j].ID%>",
+                              elec_name:"<%=dev_plan_elec[i][j].name%>",
+                              elec_time:"<%=dev_plan_elec[i][j].time%>",
+                              elec_credit:"<%=dev_plan_elec[i][j].credit%>"
+                            });
+    <%}%>
+    dev_plan_elec.push(dev_plan_elec_tmp);
+    dev_plan_elec_class.push("<%=dev_plan_elec_class[i].classification%>");
+    dev_length.push(dev_plan_elec_tmp.length);
+  <%}%>
+}
+data();
+function edit4(i){
+  $("#del2_"+i).fadeOut();
+  $("#save3_"+i).fadeIn();
+  $("#addNew2_"+i).fadeIn();
+  console.log(dev_plan_elec);
+  document.getElementById("class"+i).innerHTML="<input type=\"text\" name=\"classNameinput\" id=\"classNameinput"+i+"\" value=\""+dev_plan_elec_class[i]+"\">";
+  for(var j=0;j<dev_plan_elec[i].length;j++){
+    console.log(dev_plan_elec[i].length);
+    document.getElementById("elec_id"+i+"_"+j).innerHTML="<input type=\"text\" name=\"elecIDinput\" id=\"elecIDinput"+j+"\" value=\""+dev_plan_elec[i][j].elec_id+"\" style=\"width:100%;\">";
+    document.getElementById("elec_name"+i+"_"+j).innerHTML="<input type=\"text\" name=\"elecNameinput\" id=\"elecNameinput"+j+"\" value=\""+dev_plan_elec[i][j].elec_name+"\" style=\"width:100%;\">";
+    document.getElementById("elec_time"+i+"_"+j).innerHTML="<input type=\"text\" name=\"elecTimeinput\" id=\"elecTimeinput"+j+"\" value=\""+dev_plan_elec[i][j].elec_time+"\" style=\"width:100%;\">";
+    document.getElementById("elec_credit"+i+"_"+j).innerHTML="<input type=\"text\" name=\"elecCreditinput\" id=\"elecCreditinput"+j+"\" value=\""+dev_plan_elec[i][j].elec_credit+"\" style=\"width:100%;\">";
+  }
+}
+
+function save3(i){
+  for(var j=0;j<dev_length[i];j++){
+    var tmp_id=document.getElementById("elecIDinput"+j).value;
+    var tmp_name=document.getElementById("elecNameinput"+j).value;
+    var tmp_time=document.getElementById("elecTimeinput"+j).value;
+    var tmp_credit=document.getElementById("elecCreditinput"+j).value;
+    if(tmp_id=="") {
+      alert("课程号不能为空!");
+      return;
+    }else if(tmp_name=="") {
+      alert("课程名不能为空!");
+      return;
+    }else if(tmp_time=="") {
+      alert("推荐学期不能为空!");
+      return;
+    }else if(tmp_credit=="") {
+      alert("课程学分不能为空!");
+      return;
+    }
+  }
+  document.getElementById("major_name3_"+i).value= "<%=major_name%>";
+  if(j==dev_length[i]) document.getElementById("form_elec_"+i).submit();
+}
+function addNew2(i){
+  tmp=dev_length[i];
+  dev_length[i]=dev_length[i]+1;
+  var newReq="<tr><td id=\"elec_id"+i+tmp+"\"><input type=\"text\" id=\"elecIDinput"+tmp+"\" name=\"elecIDinput\" style=\"width:100%;\"></td><td id=\"elec_name"+tmp+"\"><input type=\"text\" id=\"elecNameinput"+tmp+"\" name=\"elecNameinput\" style=\"width:100%;\"></td><td id=\"elec_time"+tmp+"\"><input type=\"text\" id=\"elecTimeinput"+tmp+"\" name=\"elecTimeinput\" style=\"width:100%;\"></td><td id=\"elec_credit"+tmp+"\"><input type=\"text\" id=\"elecCreditinput"+tmp+"\" name=\"elecCreditinput\" style=\"width:100%;\"></td></tr>"
+  $("#elec_table_body_"+i).append(newReq);
+}
+function del2(i){
+  $("#elec_"+i).fadeIn();
+  for(var j=0;j<dev_length[i];j++){
+    console.log(j);
+    $("#elec_select"+i+"_"+j).fadeIn(); 
+  }
+  $("#del3_"+i).fadeIn();
+   
+}
+function del3(i){
+  document.getElementById("major_name3_"+i).value= "<%=major_name%>";
+  document.getElementById("form_elec_"+i).submit();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include slide_info.html%>
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('infomanage');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('coursedelete');
+            slide.className='active';
+   }
+
+     setNavActive();
+     setSlideActive();
+</script>
+
+<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-search"></i>删除课程</h3>
+          <h5>输入课程ID</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 信息填写 -->
+  <div class="span12" style="width:900px">
+    <div class="box">
+      <div class="box-header">
+        <span class="title">课程ID填写</span>
+      </div>
+      <form name="input" action="/info/coursedelete" method="post">
+        <div class="box-content padded">
+          <div class="row-fluid">
+            <div class="span9">
+            <!-- 条件选框 -->
+              <ul>
+                <li class="input">
+                  <label>课程ID</label>
+                  <input type="text" style="width:215px;"  placeholder="e.g. 123456" name="courseid2">
+                </li>
+              </ul>
+              <ul>
+                <li class="input">
+                  <label>唯一ID (注意如果此项不填写，则删除所有匹配ID的课程)</label>
+                  <input type="text" style="width:215px;"  placeholder="e.g. 557be52767b1934a071e0b4a" name="courseid">
+                </li>
+              </ul>
+              </div>
+            </div>
+            <button type="submit" style="margin-left:26px" class="btn btn-blue">删除</button>
+          </div>
+        </div>
+      </form>
+      </div>
+
+      <!-- 删除结果 -->
+      <div class="span10" style="width:900px">
+        <div class="box">
+          <div class="box-header">
+            <span class="title">删除结果</span>
+          </div>
+          <form action="/coursedelete" role="form" method="post">
+            <p><span><%= deleteresult %></span></p>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+</body>
+</html>

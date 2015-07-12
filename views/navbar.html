@@ -1,0 +1,76 @@
+<div class="navbar navbar-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+
+      <a class="brand" href="#">TeachingSystem</a>
+
+      <!-- the new toggle buttons -->
+
+      <ul class="nav pull-right">
+
+        <li class="toggle-primary-sidebar hidden-desktop" data-toggle="collapse" data-target=".nav-collapse-primary"><button type="button" class="btn btn-navbar"><i class="icon-th-list"></i></button></li>
+
+        <li class="hidden-desktop" data-toggle="collapse" data-target=".nav-collapse-top"><button type="button" class="btn btn-navbar"><i class="icon-align-justify"></i></button></li>
+
+      </ul>
+
+      <!-- 右侧下拉框 -->
+          <div class="nav-collapse nav-collapse-top collapse">
+
+            <ul class="nav full pull-right">
+              <li class="dropdown user-avatar">
+
+                <!-- the dropdown has a custom user-avatar class, this is the small avatar with the badge -->
+
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <span>
+                    <%if (user.image) {%>
+                    <img class="menu-avatar" src="../<%= user.image%>" /> <span><%= user.username %><i class="icon-caret-down"></i></span>
+                    <%}else{%>
+                        <img src="/images/avatars/avatar1.jpg"></img>
+                    <%}%>
+                </a>
+
+                <ul class="dropdown-menu">
+
+                  <!-- the first element is the one with the big avatar, add a with-image class to it -->
+
+                  <li class="with-image">
+                    <div class="avatar">
+
+                      <%if (user.image) {%>
+                      <img src="<%= user.image %>" />
+                      <%}else{%>
+                        <img src="/images/avatars/avatar1.jpg"></img>
+                      <%}%>
+
+                    </div>
+                    <span><%= user.username %></span>
+                  </li>
+
+                  <li class="divider"></li>
+
+                  <li><a href="/info/personinfo"><i class="icon-user"></i> <span>个人资料</span></a></li>
+                  <li><a href="/info/personpassword"><i class="icon-cog"></i> <span>密码修改</span></a></li>
+                  <li><a href="/logout"><i class="icon-off"></i> <span>Logout</span></a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav pull-right">
+
+              <li id="infomanage" <%if (Navstatus == 1){%>class="active"<%}%>><a href="/info/personinsert" title="Profile"><i class="icon-home"></i>信息管理</a></li>
+
+              <li <%if (Navstatus == 2){%>class="active"<%}%>><a href="/arrange/classroomselect"  title="Resource"><i class="icon-user"></i>教学资源</a></li>
+
+              <li <%if (Navstatus == 3){%>class="active"<%}%>><a href="/select/course" title="Courses"><i class="icon-table"></i>学生选课</a></li>
+
+              <li <%if (Navstatus == 4){%>class="active"<%}%>><a href="/resource" title="Share"><i class="icon-file-alt"></i>资源共享</a></li>
+
+              <li <%if (Navstatus == 5){%>class="active"<%}%>><a href="/OnlineTest" title="Judge"><i class="icon-edit"></i>在线测试</a></li>
+              <li id="grades" <%if (Navstatus == 6){%>class="active"<%}%>><a href="/grades/grades" title="GPA"><i class="icon-bar-chart"></i>成绩管理</a></li>
+
+            </ul>
+          </div>
+    </div>
+  </div>
+</div>

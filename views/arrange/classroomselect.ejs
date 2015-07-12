@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<%if(type==0) {%>
+<% include slidebar_student.html%>
+<% }%>
+<%if(type==1) {%>
+<% include slidebar_teacher.html%>
+<% }%>
+<%if(type==2) {%>
+<% include arrange_slidebar.html%>
+<% }%>
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('arrange');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('classroomselect');
+            slide.className='active';
+   }
+
+     setNavActive();
+     setSlideActive();
+</script>
+<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-search"></i>查询教室</h3>
+          <h5>获得教室信息</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 信息填写 -->
+  <div class="span12">
+    <div class="box">
+      <div class="box-header">
+        <span class="title">教室填写</span>
+      </div>
+      <form name="input" action="/arrange/classroomselect" method="post">
+        <div class="box-content padded">
+          <div class="row-fluid">
+            <div class="span9">
+            <!-- 条件选框 -->
+              <ul>
+                <li class="input">
+                  <label>教室名称</label>
+                  <input type="text" name="classid2">
+                </li>
+                <li class="input">
+                  <label>校区</label>
+                  <select name="campus">
+                    <option value="紫金港校区" selected="selected">紫金港校区</option>
+                    <option value="玉泉校区">玉泉校区</option>
+                    <option value="西溪校区">西溪校区</option>
+                    <option value="华家池校区">华家池校区</option>
+                    <option value="之江校区">之江校区</option>
+                  </select>
+                </li>
+              </ul>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-blue">查询</button>
+          </div>
+        </div>
+      </form>
+      </div>
+
+      <!-- 搜索结果 -->
+      <div class="span10">
+        <div class="box">
+          <div class="box-header">
+            <span class="title">搜索结果</span>
+          </div>
+          <form action="/action/classroomselect" role="form" method="post">
+            <% for(var i=0; i<classroom_data.length;i++) { %>
+              <li class="input">
+                <label>教室名称</label>
+                <p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= classroom_data[i].classid2 %></span></p></li>
+              </li>
+              <li class="input">
+                <label>校区</label>
+                <p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= classroom_data[i].campus %></span></p></li>
+              </li>
+              <li class="input">
+              <label>容量</label>
+              <p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= classroom_data[i].capacity %></span></p>
+              </li>
+              <li class="input">
+              <label>负责人</label>
+              <p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= classroom_data[i].facility %></span></p>
+              </li>
+            <% } %>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+</body>
+</html>

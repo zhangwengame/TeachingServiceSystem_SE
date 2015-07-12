@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <% include ../head.html %>
+</head>
+<body>
+	<% include ../navbar.html%>
+	<div class="span12" style="margin-top:20px">
+		<div class="box">
+		  <div class="box-header">
+	        <span class="title">课程信息</span>
+	      </div>
+		  <div class="box-content padded">
+		  <table id="user" class="table table-bordered table-striped responsive" style="clear: both">
+		  <tbody>
+			  <tr>
+				  <td style="width:15%;text-align:right">课程号</td>
+				  <td style="width:85%"><%=course_id%></td>
+			  </tr>
+			  <tr>
+				  <td style="width:15%;text-align:right">课程名称</td>
+				  <td style="width:85%"><%=course_name%></td>
+			  </tr>
+			  <tr>
+				  <td style="width:15%;text-align:right">English Name</td>
+				  <td style="width:85%"><%=English_name%></td>
+			  </tr>
+			  <tr>
+				  <td style="width:15%;text-align:right">开课学院</td>
+				  <td style="width:85%"><%=course_name%></td>
+			  </tr>
+			  <tr>
+				  <td style="width:15%;text-align:right">所属类别</td>
+				  <td style="width:85%"><%=catagory%></td>
+			  </tr>
+			  <tr>
+				  <td style="width:15%;text-align:right">课程简介</td>
+				  <td style="width:85%;height:100px;overflow-y:scroll"><%=course_data%></td>
+			  </tr>
+			  <tr>
+				  <td style="width:15%;text-align:right">课程大纲</td>
+				  <td style="width:85%;height:100px;overflow-y:scroll">
+					<%for(var i=0;i<course_outline.length;i++){%>
+						<%=course_outline[i]%>
+						<br/>
+					<%}%>
+				  </td>
+			  </tr>
+		  </tbody>	  
+		  </table>
+		  </div>	
+	</div>
+</body>

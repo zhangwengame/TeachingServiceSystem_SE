@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+    <% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include slide_person_info.html%>
+
+<script type="text/javascript">
+    function setNavActive(){
+        var active=document.getElementById('infomanage');
+        active.className='active';
+    }
+    function setSlideActive(){
+        var slide = document.getElementById('personinfo');
+        slide.className='active';
+    }
+    setNavActive();
+    setSlideActive();
+</script>
+
+<!-- 主要内容 -->
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="area-top clearfix">
+                <div class="pull-left header">
+                    <h3 class="title"><i class="icon-search"></i>个人信息</h3>
+                    <h5>点击修改也不能修改个人信息</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 信息填写 -->
+    <div class="span12" style="width:900px">
+        <div class="box" style="width:900px">
+            <div class="box-header">
+                <span class="title">个人信息</span>
+            </div>
+
+            <form name="input" action="/info/personinfo" method="post"  >
+                <div class="box-content padded">
+                    <div class="row-fluid">
+                        <style>.span9 li{list-style:none;}</style>
+                        <div class="span9" style="width:700px">
+
+                            <ul>
+                                <li class="input" style="margin-top:40px;margin-left:360px">
+                                    <img style="height:240px;width:240px" src=<%= person_data.photo %> class="menu-avatar">
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="input" style="margin-top:100px;margin-left:360px">
+                                    <label>电话</label>
+                                    <input type="text" readonly="readonly" name="tel" style="border:none;margin-left:10px" value=<%= person_data.tel %>>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="input" style="margin-top:20px;margin-left:360px">
+                                    <label>邮箱</label>
+                                    <input type="text" readonly="readonly" name="email" style="border:none;margin-left:10px;width:20px" value=<%= person_data.email %>>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="input" style="margin-top:-520px">
+                                    <label>姓名</label>
+                                    <input type="text" readonly="readonly" name="username" style="border:none;width:160px;" value=<%= person_data.username %>>
+                                </li>
+                            </ul>
+
+
+                            <ul>
+                                <li class="input">
+                                    <label>学工号</label>
+                                    <input type="text" readonly="readonly" name="userid" style="border:none;width:160px;" value=<%= person_data.userid %>>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="input">
+                                    <label>学院</label>
+                                    <input type="text" readonly="readonly" name="college" style="border:none;width:160px" value=<%= person_data.college %>>
+                                </li>
+                            </ul><!--wwq``````````````````````````````````````````````````````````````````````-->
+                            <ul>
+                                <li class="input">
+                                    <label>身份</label>
+                                    <input type="text" readonly="readonly" name="status" style="border:none;width:160px" value=<%= person_data.status %>>
+                                </li>
+                            </ul>
+
+                            <ul>
+                                <li class="input">
+                                    <label>性别</label>
+                                    <input type="text" readonly="readonly" name="sex" style="border:none;margin-left:10px;width:160px" value=<%= person_data.sex %>>
+                                </li>
+                            </ul>
+
+                            <ul>
+                                <li class="input">
+                                    <label>年龄</label>
+                                    <input type="text" readonly="readonly" name="age" style="border:none;margin-left:10px;width:160px" value=<%= person_data.age %>>
+                                </li>
+                            </ul>
+
+                            <ul>
+                                <li class="input">
+                                    <label>专业</label>
+                                    <input type="text" readonly="readonly" name="major" style="border:none;margin-left:10px;width:160px" value=<%= person_data.major %>>
+                                </li>
+                            </ul>
+
+
+
+                            <ul>
+                                <li class="input">
+                                    <label>职称</label>
+                                    <input type="text" readonly="readonly" name="title" style="border:none;margin-left:10px;width:160px" value=<%= person_data.title %>>
+                                </li>
+                            </ul>
+
+
+                            <!--   <button type="submit" class="btn btn-blue" style="margin-top:20px;margin-left:26px">修改</button>-->
+
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

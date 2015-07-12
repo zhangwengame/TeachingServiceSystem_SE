@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+  <% include ../head.html %>
+  <style>
+      .action-nav-button{
+        width: 15%;
+      }
+
+      .course-info{
+          white-space: pre-wrap;
+      }
+  </style>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include slide_course.html%>
+<script type="text/javascript">
+</script>
+<!-- 主要内容 -->
+<div class="main-content">
+    <%include current_title.html %>
+
+    <%include resource_bar.html%>
+    <%var root = true %>
+
+<!--<div class="span10">-->
+<!--<ul class="chat-box timeline" style="max-width:90%">-->
+
+  <!--<li class="arrow-box-left gray">-->
+    <!--<div class="avatar"><img class="avatar-small" src="../../images/avatars/avatar2.jpg" /></div>-->
+    <!--<div class="info">-->
+      <!--<span class="name">-->
+        <!--<span class="label label-blue">TASK</span> <strong class="indent">老师</strong> 布置了新作业： <strong>需求报告</strong>-->
+      <!--</span>-->
+      <!--<span class="time"><i class="icon-time"></i> 6 minutes ago</span>-->
+    <!--</div>-->
+  <!--</li>-->
+
+  <!--<li class="arrow-box-left gray">-->
+    <!--<div class="avatar"><img class="avatar-small" src="../../images/avatars/avatar3.jpg" /></div>-->
+    <!--<div class="info">-->
+      <!--<span class="name">-->
+        <!--<span class="label label-purple">FILE</span> <strong class="indent">老师</strong> 上传了新的资源：<strong>SE_ppt_ch1.ppt</strong>-->
+      <!--</span>-->
+      <!--<span class="time"><i class="icon-time"></i> 12 minutes ago</span>-->
+    <!--</div>-->
+  <!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+
+
+<div class="span10">
+  <div class="box" style="magin-left:100px;min-width:90%;">
+      <div class="box-header">
+        <div class="title">课程信息</div>
+
+        <ul class="nav nav-tabs nav-tabs-right">
+          <li class="active"><a href="#profile2" data-toggle="tab"><i class="icon-comments-alt"></i> <span>重要信息</span></a></li>
+          <li><a href="#messages2" data-toggle="tab"><i class="icon-comments-alt"></i> <span>老师/助教联系方式</span></a></li>
+          <li><a href="#settings2" data-toggle="tab"><i class="icon-cog"></i> <span>参考链接</span></a></li>
+        </ul>
+
+      </div>
+
+      <div class="box-content padded">
+        <div class="tab-content">
+          <div class="tab-pane active course-info" id="profile2">50%大程+50%考试
+期末开卷考试
+讨论稿或提要要递交
+
+讨论课 2-3次 12-15分钟发言时间 轮空提问
+
+讨论课 70% 发言及讨论稿 50% 对他人发言 20% 期末开卷30%
+
+准备一张姓名卡：姓名专业</div>
+          <div class="tab-pane course-info" id="messages2">zywang@cad.zju.edu.cn
+助教:zsx19931129@163.com
+www.cs.zju.edu.cn/se
+qq:1282842242
+qq群：372424807</div>
+          <div class="tab-pane course-info" id="settings2">zywang@cad.zju.edu.cn
+          </div>
+        </div>
+      </div>
+
+      <%if (root == true) {%>
+          <div class="box-footer">
+              <div class="pull-right">
+                  <button class="btn btn-xs btn-success" data-toggle="modal" href="#modal-edit" style="margin:10px;"><i class="icon-edit"></i>编辑课程信息</button>
+              </div>
+          </div>
+      <%}%>
+  </div>
+</div>
+
+<%if (root == true) {%>
+<div id="modal-edit" class="modal fade hide">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">修改课程信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label">重要信息:</label>
+                        <textarea rows="6" name="hw-require" placeholder="重要信息"></textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label class="control-label">联系方式:</label>
+                        <textarea rows="6" name="hw-require" placeholder="联系方式"></textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label class="control-label">参考链接:</label>
+                        <textarea rows="6" name="hw-require" placeholder="参考链接"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">放弃</button>
+                <button type="button" class="btn btn-blue" data-src="" id="shareSubmit">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal --><!-- find me in partials/modal_form -->
+<%}%>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!doctype html>
+<% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include student_slide.html%>
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('grades');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('testSearch');
+            slide.className='active';
+   }
+
+     setNavActive();
+     setSlideActive();
+</script>
+
+
+
+
+<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-search"></i>考试查询</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="span10">
+    <div class="box">
+      <div class="box-header">
+        <span class="title">考试查询</span>
+        <ul class="box-toolbar">
+          <li><span class="label label-blue">2</span></li>
+        </ul>
+      </div>
+      <div class="box-content scrollable" style="height: 500px; overflow-y:auto">
+        <!-- 选择显示模式 -->
+        <div class="box-content padded">
+          <div class="btn-group">
+            <button class="btn btn-default  dropdown-toggle" data-toggle="dropdown">
+              <span id="layout">列表显示</span>
+              <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="javascript:show_list()">列表显示</a></li>
+              <li><a href="javascript:show_table()">表格显示</a></li>
+            </ul>
+          </div>
+          <span>&nbsp;&nbsp;查看</span>
+          <div class="btn-group">
+            <button class="btn btn-default  dropdown-toggle" data-toggle="dropdown">
+              <span id="year">2014 ~ 2015</span>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              
+                <li><a href="javascript:show_year(2013)"> 2013 ~ 2014</a></li>
+              
+                <li><a href="javascript:show_year(2014)"> 2014 ~ 2015</a></li>
+              
+            </ul>
+          </div>
+          <span>学年&nbsp;&nbsp;</span>
+          <div class="btn-group" id="btn_list">
+            <button class="btn btn-default  dropdown-toggle" data-toggle="dropdown">
+              
+              <span id="sem">春夏</span>
+              
+              
+              <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="javascript:show_sem(1)">秋冬</a></li>
+              <li><a href="javascript:show_sem(2)">春夏</a></li>
+            </ul>
+          </div>
+          <div class="btn-group" style="position:relative;" id="btn_table" hidden="">
+            <button class="btn btn-default  dropdown-toggle" data-toggle="dropdown">
+              <span id="sem2"> 春 </span>
+              <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="javascript:show_sem2(1)">秋</a></li>
+              <li><a href="javascript:show_sem2(2)">冬</a></li>
+              <li><a href="javascript:show_sem2(3)">春</a></li>
+              <li><a href="javascript:show_sem2(4)">夏</a></li>
+            </ul>
+          </div>
+           <span>学期&nbsp;&nbsp;</span>
+        </div>
+        <!-- 显示列表状态课表 -->
+        <div class="box-content padded" style="text-align:center;" id="list_layout">
+          <table width="100%" class="table table-normal">
+          <thead>
+            <tr>
+              <td style="width:15%">课程编号</td>
+              <td style="width:25%">课程名称</td>
+              <td style="width:10%">教师姓名</td>
+              <td style="width:%10">学期</td>
+              <td style="width:15%">考试时间</td>
+              <td style="width:10%">考试校区</td>   
+              <td style="width:15%">考试地点</td>
+            </tr>
+          </thead>
+          <tbody>
+            
+
+            <tr>
+              <td><a href='#'>00001</a></td>
+              <td><a href='#'>微积分I</a></td>
+              <td><a href='#'>张亮</a></td>
+              <td><a href='#'>春</a></td>
+              <td><a href='#'>5月5日</a></td>
+              <td><a href='#'>玉泉</a></td>
+              <td><a href='#'>曹西-204</a></td>
+            </tr>
+            
+
+            <tr>
+              <td><a href='#'>00002</a></td>
+              <td><a href='#'>微积分II</a></td>
+              <td><a href='#'>张亮</a></td>
+              <td><a href='#'>春夏</a></td>
+              <td><a href='#'>5月5日</a></td>
+              <td><a href='#'>玉泉</a></td>
+              <td><a href='#'>曹西-101</a></td>
+            </tr>
+            
+          </tbody>  
+          </table>
+        </div>
+      </div>
+      <!-- 显示表格状课表 -->
+      <div class="box-content padded" style="text-align:center; top:-440px; position:relative;" id="table_layout" hidden="">
+          <table width="100%" class="table table-normal">
+          <thead>
+            <tr>
+              <td style="width:9%">&nbsp;</td>
+              <td style="width:13%">周一</td>
+              <td style="width:13%">周二</td>
+              <td style="width:13%">周三</td>
+              <td style="width:13%">周四</td>
+              <td style="width:13%">周五</td>
+              <td style="width:13%">周六</td>   
+              <td style="width:13%">周日</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr height="100px">
+              <td>第1、2节</br>8:30~9:35</td>
+              <td id="Mon12">&nbsp;</td>
+              <td id="Tue12">&nbsp;</td>
+              <td id="Web12">&nbsp;</td>
+              <td id="Thu12">&nbsp;</td>
+              <td id="Fri12">&nbsp;</td>
+              <td id="Sat12">&nbsp;</td>   
+              <td id="Sun12">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>第3、4节</br>9:50~11:25</td>
+              <td id="Mon34">&nbsp;</td>
+              <td id="Tue34">&nbsp;</td>
+              <td id="Web34">&nbsp;</td>
+              <td id="Thu34">&nbsp;</td>
+              <td id="Fri34">&nbsp;</td>
+              <td id="Sat34">&nbsp;</td>   
+              <td id="Sun34">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>第5节</br>11:30~12:15</td>
+              <td id="Mon5">&nbsp;</td>
+              <td id="Tue5">&nbsp;</td>
+              <td id="Web5">&nbsp;</td>
+              <td id="Thu5">&nbsp;</td>
+              <td id="Fri5">&nbsp;</td>
+              <td id="Sat5">&nbsp;</td>   
+              <td id="Sun5">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>第6节</br>13:15~14:00</td>
+              <td id="Mon6">&nbsp;</td>
+              <td id="Tue6">&nbsp;</td>
+              <td id="Web6">&nbsp;</td>
+              <td id="Thu6">&nbsp;</td>
+              <td id="Fri6">&nbsp;</td>
+              <td id="Sat6">&nbsp;</td>   
+              <td id="Sun6">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>第7、8节</br>14:05~15:40</td>
+              <td id="Mon78">&nbsp;</td>
+              <td id="Tue78">&nbsp;</td>
+              <td id="Web78">&nbsp;</td>
+              <td id="Thu78">&nbsp;</td>
+              <td id="Fri78">&nbsp;</td>
+              <td id="Sat78">&nbsp;</td>   
+              <td id="Sun78">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>第9、10节</br>15:55~17:30</td>
+              <td id="Mon910">&nbsp;</td>
+              <td id="Tue910">&nbsp;</td>
+              <td id="Web910">&nbsp;</td>
+              <td id="Thu910">&nbsp;</td>
+              <td id="Fri910">&nbsp;</td>
+              <td id="Sat910">&nbsp;</td>   
+              <td id="Sun910">&nbsp;</td>
+            </tr>
+            <tr height="100px">
+              <td>晚上</br>18:30~21:30</td>
+              <td id="Mon_night">&nbsp;</td>
+              <td id="Tue_night">&nbsp;</td>
+              <td id="Web_night">&nbsp;</td>
+              <td id="Thu_night">&nbsp;</td>
+              <td id="Fri_night">&nbsp;</td>
+              <td id="Sat_night">&nbsp;</td>   
+              <td id="Sun_night">&nbsp;</td>
+            </tr>
+          </tbody>  
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 主要内容的js -->
+<script type="text/javascript">
+  function show_table_content(){
+    //预先处理文件，隐藏btn_table
+    $("#btn_table").hide();
+    //处理字符串 找到相应位置 添加课程
+    
+      var time="周一 345";
+      var time_arr=time.split(' ');
+      var course_name="微积分I";
+      var course_teacher="XX1";
+      var course_room="曹西-204";
+      var data=course_name+'</br>'+course_teacher+'</br>'+course_room;
+      console.log(data);
+      console.log(time);
+      for(var j=0;j<time_arr.length;j=j+2){
+        var str;
+        switch(time_arr[j]){
+          case "周一": str="Mon";break; 
+          case "周二": str="Tue";break;
+          case "周三": str="Web";break; 
+          case "周四": str="Thu";break; 
+          case "周五": str="Fri";break; 
+          case "周六": str="Sat";break; 
+          case "周日": str="Sun";break;
+        }
+        switch(time_arr[j+1]){
+          case "12":
+            document.getElementById(str+'12').innerHTML=data;
+            break;
+          case "34":
+            document.getElementById(str+'34').innerHTML=data;
+            break;
+          case "345":
+            document.getElementById(str+'34').innerHTML=data;
+            document.getElementById(str+'5').innerHTML=data;
+            break;
+          case "67":
+            document.getElementById(str+'67').innerHTML=data;
+            break;
+          case "678":
+            document.getElementById(str+'67').innerHTML=data;
+            document.getElementById(str+'8').innerHTML=data;
+            break;
+          case "910":
+            document.getElementById(str+'910').innerHTML=data;
+            break;
+          case "night":
+            document.getElementById(str+'_night').innerHTML=data;
+            break;
+        }
+        console.log(str);
+      }
+    
+      
+        console.log(str);
+      }
+    
+  
+  function show_list(){
+    document.getElementById('layout').innerHTML="列表显示";
+    $("#list_layout").fadeIn();
+    $("#table_layout").fadeOut();
+    $("#btn_list").show();
+    $("#btn_table").hide();
+  }
+  function show_table(){
+    document.getElementById('layout').innerHTML="表格显示";
+    $("#list_layout").fadeOut();
+    $("#table_layout").fadeIn();
+    $("#btn_list").hide();
+    $("#btn_table").show();
+
+  }
+  function show_year(year){
+    document.getElementById('year').innerHTML=year+' ~ '+(year+1);
+    //获取所需传输数据
+    var data_year=year;
+    var data_sem;
+    if(document.getElementById('layout').innerHTML=="列表显示")
+      data_sem=document.getElementById('sem').innerHTML;
+    else data_sem=document.getElementById('sem2').innerHTML;
+    //ajax传输
+    var _json = jQuery.param ({year:data_year,sem:data_sem});  
+    var request = $.ajax({  
+        url: "/my_course_search",  
+        type: "POST",  
+        async: false,  
+        data: _json,   
+        dataType: "json",  
+        // contentType: "charset=utf-8",  
+        cache: false,
+    });  
+  }
+  function show_sem(choice){
+    if(choice==1)
+      document.getElementById('sem').innerHTML="秋冬";
+    else
+      document.getElementById('sem').innerHTML="春夏";
+    //获取所需传输数据
+    var data_year=document.getElementById('year').innerHTML.split(" ")[0];
+    var data_sem=document.getElementById('sem').innerHTML;
+    //ajax传输
+    var _json = jQuery.param ({year:data_year,sem:data_sem});
+    var request = $.ajax({  
+        url: "/my_course_search",  
+        type: "POST",  
+        async: false,  
+        data: _json,   
+        dataType: "json",  
+        // contentType: "charset=utf-8",  
+        cache: false,
+    });  
+  }
+  function show_sem2(choice){
+    switch(choice){
+      case 1:document.getElementById('sem2').innerHTML="秋";break;
+      case 2:document.getElementById('sem2').innerHTML="冬";break;
+      case 3:document.getElementById('sem2').innerHTML="春";break;
+      case 4:document.getElementById('sem2').innerHTML="夏";break;
+    }
+    //获取所需传输数据
+    var data_year=document.getElementById('year').innerHTML.split(' ')[0];
+    var data_sem=document.getElementById('sem2').innerHTML;
+    //ajax传输
+    var _json = jQuery.param ({year:data_year,sem:data_sem});  
+    var request = $.ajax({  
+        url: "/my_course_search",  
+        type: "POST",  
+        async: false,  
+        data: _json, //不能直接写成 {id:"123",code:"tomcat"}  
+        dataType: "json",  
+        // contentType: "charset=utf-8",  
+        cache: false,
+    });  
+  }
+  show_table_content();
+</script>
+
+
+
+
+
+
+</div>
+</body>
+</html>

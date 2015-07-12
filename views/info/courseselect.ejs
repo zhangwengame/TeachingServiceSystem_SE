@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+    <% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include slide_info.html%>
+
+<script type="text/javascript">
+    function setNavActive(){
+        var active=document.getElementById('infomanage');
+        active.className='active';
+    }
+
+    function setSlideActive(){
+        var slide = document.getElementById('courseselect');
+        slide.className='active';
+    }
+
+    setNavActive();
+    setSlideActive();
+</script>
+<script language="javascript">
+        function Mymouseover(theid)
+        {
+
+        }
+        function setvalue(theid) {
+            j = theid.value;
+            <%for(var i=0;i<data.length;i++)
+                {%>
+            if(j==<%=i%>+0 ) {
+                document.getElementById("courseid").value="<%=data[i].courseid%>";
+                document.getElementById("coursename").value="<%=data[i].coursename%>";
+                document.getElementById("courseid2").value="<%=data[i].courseid2%>";
+                document.getElementById("courseterm").value="<%=data[i].courseterm%>";
+                document.getElementById("coursetime").value="<%=data[i].coursetime%>";
+                document.getElementById("coursecore").value="<%=data[i].coursescore%>";
+                document.getElementById("year").value="<%=data[i].year%>";
+                document.getElementById("all").value="<%=data[i].all%>";
+                document.getElementById("remain").value="<%=data[i].remain%>";
+                document.getElementById("waiting").value="<%=data[i].waiting%>";
+                document.getElementById("teacher").value="<%=data[i].teacher%>";
+                document.getElementById("examtime").value="<%=data[i].examtime%>";
+                document.getElementById("room").value="<%=data[i].room%>";
+                document.getElementById("campus").value="<%=data[i].campus%>";
+                document.getElementById("college").value="<%=data[i].college%>";
+            }
+            <%}%>
+        }
+</script >
+<!-- 主要内容 -->
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="area-top clearfix">
+                <div class="pull-left header">
+                    <h3 class="title"><i class="icon-search"></i>课程查询</h3>
+                    <h5>获得课程信息</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 信息填写 -->
+    <div class="span12" style="width:900px">
+        <div class="box" style="width:900px">
+            <div class="box-header">
+                <span class="title">课程ID填写</span>
+            </div>
+            <form name="input" action="/info/courseselect" method="post">
+                <div class="box-content padded">
+                    <div class="row-fluid">
+                        <div class="span9">
+                            <!-- 条件选框 -->
+                            <ul>
+                                <li class="input">
+                                    <label>课程ID</label>
+                                    <input type="text" style="width:215px" placeholder="e.g. 123456" name="courseid2">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="submit" style="margin-left:26px" class="btn btn-blue">查询</button>
+                </div>
+        </div>
+        </form>
+    </div>
+
+    <!-- 搜索结果 -->
+
+    <div class="span12" style="width:900px">
+        <div class="box">
+            <div class="box-header">
+                <span class="title">搜索结果</span>
+            </div>
+            <form action="/courseselect" role="form" method="post">
+                <div class="box-content padded">
+                    <div class="row-fluid">
+                    <div class="span9">
+                            <% for(var  i=0; i<data.length;i++) if(i==0){ %>
+                            选择课程
+                            <select id="s" onchange="setvalue(this)">
+                                
+                                <optgroup lable="..">
+                                    <%for(var j=0;j<data.length;j++) { %>
+                                    <option value=<%=j%> ><%=j%>/<%=data[j].coursename%>/<%=data[j].teacher%></option>
+                                    <%}%>
+                                </optgroup>
+                            </select>
+                            
+                            <li class="input">
+                                <label>课程唯一id
+                                <input style="margin-top:9px;width:215px;margin-left:10px;border:none" id="courseid" type="text" readonly="readonly"    value=<%= data[i].courseid %>>
+                                </label>
+                            </li>
+                            
+                            <li class="input">
+                                <label style="font-size:12px">课程名称
+                                <input  style="margin-top:9px;width:215px;margin-left:10px;border:none" id="coursename" type="text" readonly="readonly"   value=<%= data[i].coursename %>>
+                                </label>
+                            </li>
+                            
+                            <li class="input" style="margin-top:-50px; margin-left:200px">
+                                <label>课程 ID
+                                <input style="margin-top:9px;width:215px;margin-left:10px;border:none" id="courseid2" type="text" readonly="readonly"    value=<%= data[i].courseid2 %>>
+                                </label>
+                            </li>
+                            
+                            <li class="input">
+                                <label>授课老师
+                                <input style="margin-top:9px;width:215px;margin-left:10px;border:none" id="teacher" type="text" readonly="readonly" value=<%= data[i].teacher %>>
+                                </label>
+                            </li>
+                            
+                            <li class="input" style="margin-top:-50px; margin-left:200px">
+                                <label>开课学院
+                                <input style="margin-top:9px;width:215px;margin-left:10px;border:none" id="college" type="text" readonly="readonly" value=<%= data[i].college %>>
+                                </label>
+                            </li>
+                            
+                            <li class="input">
+                                <label>课程年份
+                                <input style="margin-top:9px;width:215px;margin-left:10px;border:none"id="year" type="text" readonly="readonly" value=<%= data[i].year %>>
+                                </label>
+                            </li>
+                            
+                            <li class="input" style="margin-top:-50px; margin-left:200px">
+                                <label>课程学期
+                                <input style="margin-top:9px;width:215px;margin-left:10px;border:none"id="courseterm" type="text" readonly="readonly" value=<%= data[i].courseterm %>>
+                                </label>
+                            </li>
+                            
+                            <li class="input">
+                                <label>课程学分
+                                <input style="margin-top:9px;width:215px;margin-left:10px;border:none"id="coursecore" type="text" readonly="readonly" value=<%= data[i].coursescore %>>
+                                </label>
+                            </li>
+                            
+                            <li class="input" style="margin-top:-50px; margin-left:200px">
+                                <label>考试时间
+                                <input style="margin-top:9px;width:215px;margin-left:10px;border:none" id="examtime" type="text" readonly="readonly" value=<%= data[i].examtime %>>
+                                </label>
+                            </li>
+                            
+                            <li class="input">
+                                <label>上课校区
+                                <input style="margin-top:9px;width:215px;margin-left:10px;border:none" id="campus" type="text" readonly="readonly" value=<%= data[i].campus %>>
+                                </label>
+                            </li>
+                            
+                            <li class="input" style="margin-top:-50px; margin-left:200px">
+                                <label>上课教室
+                                <input style="margin-top:9px;width:215px;margin-left:10px;border:none" id="room" type="text" readonly="readonly" value=<%= data[i].room %>>
+                                </label>
+                            </li>
+                            
+                            <li class="input">
+                                <label>课程容量<input style="margin-top:9px;width:30;margin-left:10px;border:none" id="all" type="text" readonly="readonly" value=<%= data[i].all %>></label>
+                                <label style="margin-top:-49px; margin-left:120px">课程余量<input style="margin-top:9px;width:30px;margin-left:10px;border:none" id="remain" type="text" readonly="readonly" value=<%= data[i].remain %>></label>
+                                <label style="margin-top:-49px; margin-left:240px">待选人数<input style="margin-top:9px;width:30px;margin-left:10px;border:none" id="waiting" type="text" readonly="readonly" value=<%= data[i].waiting %>></label>
+                            </li>
+
+                            <li class="input">
+                                <label>上课时间
+                                <input style="margin-top:9px;width:215px;margin-left:10px;border:none"id="coursetime" type="text" readonly="readonly" value=<%= data[i].coursetime %>>
+                                </label>
+                            </li>
+                            <% } %>
+                     </div></div></div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>

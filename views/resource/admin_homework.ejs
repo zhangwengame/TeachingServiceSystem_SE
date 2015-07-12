@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+  <% include ../head.html %>
+  <style>
+  .action-nav-button{
+    width: 15%;
+  }
+  </style>
+  <script>
+//  $(document).ready(function(){
+//    $('#stu1').editable();
+//    $('#stu2').editable();
+//    $('#stu3').editable();
+//  });
+
+  </script>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include slide_cloud.html%>
+<script type="text/javascript">
+   function setActive(){
+    var active=document.getElementById('resource_share');
+    active.className='active';
+  }
+  setActive();
+</script>
+<!-- 主要内容 -->
+<div class="main-content">
+    <%include current_title.html %>
+
+<div class="span10">
+  <div class="box">
+      <div class="box-header">
+        <div class="title">当前作业：第一章作业</div>
+      </div>
+
+      <div class="box-content">
+      <table class="table table-normal" style="">
+      <thead>
+      <tr>
+        <td></td>
+        <td>学号</td>
+        <td>姓名</td>
+        <!--<td>分数</td>-->
+        <td style="width: 40px"></td>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <td class="icon"><i class="icon-file"></i></td>
+        <td><a href="#">3120101284</a></td>
+        <td><b>李逸婷</b></td>
+        <!--<td><a href="#" id="stu1" data-type="text" data-pk="1" data-name="username" data-original-title="Enter score">未批改</a></td>-->
+        <td>
+          <div class="btn-group">
+            <a href="#" class="btn btn-info" rel="tooltip" data-placement="top" data-original-title="下载作业"><i class="icon-download-alt"></i>下载</a>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="icon"><i class="icon-file"></i></td>
+        <td><a href="#">3120000575</a></td>
+        <td><b>张宇昊</b></td>
+        <!--<td><a href="#" id="stu2" data-type="text" data-pk="1" data-original-title="Enter score">未批改</a></td>-->
+        <td>
+          <div class="btn-group">
+            <a href="#" class="btn btn-info" rel="tooltip" data-placement="top" data-original-title="下载作业"><i class="icon-download-alt"></i>下载</a>
+          </div>
+        </td>
+      </tr>
+            <tr>
+        <td class="icon"><i class="icon-file"></i></td>
+        <td><a href="#">3120101273</a></td>
+        <td><b>冯喆</b></td>
+        <!--<td><a href="#" id="stu3" data-type="text" data-pk="2" data-original-title="Enter score">90</a></td>-->
+        <td>
+          <div class="btn-group">
+            <a href="#" class="btn btn-info" rel="tooltip" data-placement="top" data-original-title="下载作业"><i class="icon-download-alt"></i>下载</a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+      </div>
+  </div>
+</div>
+
+
+
+</div>
+</body>
+</html>

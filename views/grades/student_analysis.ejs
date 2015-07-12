@@ -1,0 +1,259 @@
+<!doctype html>
+<% include ../head.html %>
+<script src="/javascripts/echarts/dist/echarts.js"></script>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<% include student_slide.html%>
+<script type="text/javascript">
+   function setNavActive(){
+       var active=document.getElementById('grades');
+           active.className='active';
+    }
+
+   function setSlideActive(){
+        var slide = document.getElementById('analysis');
+            slide.className='active';
+   }
+
+     setNavActive();
+     setSlideActive();
+</script>
+
+<script type="text/javascript">
+        var yearBar = <%-JSON.stringify(yearBar)%>;
+
+        require.config({
+            paths: {
+                echarts: '/javascripts/echarts/dist'
+            }
+        });
+        require(
+            [
+                'echarts',
+                'echarts/chart/line',   // 按需加载所需图表，如需动态类型切换功能，别忘了同时加载相应图表
+                'echarts/chart/bar'
+            ],
+            function (ec) {
+                var myChart = ec.init(document.getElementById('main'));
+            var   option = {
+    title : {
+        text: '绩点统计图'
+      
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['学年主修专业绩点','学年课程平均绩点','总绩点']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,       
+            //data: ['2012-2013','2013-2014','2014-2015','2015-2016']
+            data: yearBar
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            min:0,
+            max:5,
+            axisLabel : {
+                formatter: '{value} '
+            }
+        }
+    ],
+    series : [
+        {
+            name:'学年主修专业绩点',
+            type:'line',
+            data:[<%=mainGPA%>],
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+        },
+        {
+            name:'学年课程平均绩点',
+            type:'line',
+            data:[<%=everyGPA%>],
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+        },
+        {
+            name:'总绩点',
+            type:'line',
+            data:[<%=overallGPA%>],
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                ]
+            },
+            markLine : {
+                data : [
+                    {type : 'average', name: '平均值'}
+                ]
+            }
+        }
+
+    ]
+};
+                myChart.setOption(option);
+            }
+        );
+    </script>
+ <script type="text/javascript">
+        require.config({
+            paths: {
+                echarts: '/javascripts/echarts/dist'
+            }
+        });
+		require(
+            [
+                'echarts',
+                'echarts/chart/radar'
+            ],
+            function (ec) {
+                var myChart = ec.init(document.getElementById('main2'));
+                var option = {
+    title : {
+        text: '绩点分布图',
+           },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        orient : 'vertical',
+        x : 'right',
+        y : 'bottom',
+        data:['第一学年','第二学年','第三学年','第四学年']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    polar : [
+       {
+           indicator : [
+               { text: '公共课', max: 5},
+               { text: '专业必修', max: 5},
+               { text: '专业选修', max: 5},
+            //   { text: '专业选修课程', max: 5},
+            //   { text: '通识课程', max: 5},
+               
+            ]
+        }
+    ],
+    calculable : true,
+    series : [
+        {
+            name: '绩点分布',
+            type: 'radar',
+            data : [
+                {
+                    value : [<%=yearsGPA[0]%>],
+                    name : '第一学年'
+                },
+                 {
+                    value :[<%=yearsGPA[1]%>],
+                    name : '第二学年'
+                },
+                {
+                    value : [<%=yearsGPA[2]%>],
+                    name : '第三学年'
+                },
+                {
+                    value : [<%=yearsGPA[3]%>],
+                    name : '第四学年'
+                }
+            ]
+        }
+    ]
+};
+                    myChart.setOption(option);
+            }
+        );
+        </script>
+
+
+
+<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-search"></i>成绩分析</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class = "span10">
+<div class="row">
+  <div class="col-md-4">
+    <div class="box">
+
+      <div class="box-header"><span class="title">图1</span></div>
+        <div id="main" style="height:400px"></div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+
+    <div class="box">
+      <div class="box-header">
+        <span class="title">图2</span></span>
+      </div>
+      
+      <div class="box-content padded">
+       <div id="main2" style="height:400px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+</div>
+</body>
+</html>

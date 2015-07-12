@@ -1,0 +1,57 @@
+<html>
+<head>
+    <script type="text/javascript" src="/javascripts/vendor/jquery.easyui.min.js"></script>
+            <script type="text/javascript" src="/javascripts/vendor/jquery.tmpl.js"></script>
+            <script type="text/javascript" src="/javascripts/vendor/ajaxfileupload.js"></script>
+            <link rel="stylesheet" type="text/css" href="/stylesheets/easyui.css">
+            <link rel="stylesheet" type="text/css" href="/stylesheets/icon.css">
+    <script type="text/javascript">
+        $(function () {
+            $(":button").click(function () {
+                if ($("#file1").val().length > 0) {
+                    ajaxFileUpload();
+                }
+                else {
+                    alert("请选择图片");
+                }
+            })
+        })
+        function ajaxFileUpload() {
+            $.ajaxFileUpload
+            (
+                {
+                    url: '/Home/Upload', //用于文件上传的服务器端请求地址
+                    type: 'post',
+                    data: { Id: '123', name: 'lunis' }, //此参数非常严谨，写错一个引号都不行
+                    secureuri: false, //一般设置为false
+                    fileElementId: 'file1', //文件上传空间的id属性  <input type="file" id="file" name="file" />
+                    dataType: 'json', //返回值类型 一般设置为json
+                    success: function (data, status)  //服务器成功响应处理函数
+                    {
+                        alert(data);
+                        $("#img1").attr("src", data.imgPath1);
+                        alert("你请求的Id是" + data.Id + "     " + "你请求的名字是:" + data.name);
+                        if (typeof (data.error) != 'undefined') {
+                            if (data.error != '') {
+                                alert(data.error);
+                            } else {
+                                alert(data.msg);
+                            }
+                        }
+                    },
+                    error: function (data, status, e)//服务器响应失败处理函数
+                    {
+                        alert(e);
+                    }
+                }
+            )
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <p><input type="file" id="file1" name="file" /></p>
+    <input type="button" value="上传" />
+    <p><img id="img1" alt="上传成功啦" src="" /></p>
+</body>
+</html>

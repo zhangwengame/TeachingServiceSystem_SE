@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+  <% include ../head.html %>
+</head>
+<body>
+<% include ../navbar.html%>
+<form name="input" action="/select/course_list/<%=_id%>" method="post"> 
+<div style="width:100%;text-align:center; padding-top:20px;">
+  <div hidden="">
+    <input type="text" name="type" value="list">
+  </div>
+  <button type="submit" class="btn btn-blue">导出课程名单为Excel</button>
+</div>
+</form>
+<div class="span12" style="margin-top:20px">
+<div class="box">
+  <div class="box-header">
+    <span class="title">课程名单</span>
+    <ul class="box-toolbar">
+      <li>
+      	<span class="label">
+      	  课程名称：<%= course_name%>&nbsp;&nbsp;&nbsp;
+          学分：<%= credits%>&nbsp;&nbsp;&nbsp;
+          课程时间：<%= course_time%>
+      	</span>
+      </li>
+    </ul>
+  </div>
+  <div class="box-content padded">
+  <table class="table table-normal" id="student_list" >
+    <thead>
+      <tr>
+        <td width="25%">学号</td>
+        <td width="15%">姓名</td>
+        <td width="25%">班级</td>
+        <td width="35%">专业</td>
+      </tr>
+    </thead>
+    <tbody>
+      <%for (var i=0;i<students.length;i++){%>
+      <tr>
+        <td><%=students[i].sId %></td>
+        <td><%=students[i].sname %></td>
+        <td><%=students[i].classNo %></td>
+        <td><%=students[i].major %></td>
+      </tr>
+      <%}%>
+    </tbody>
+  </table>
+  </div>	
+</div>
+<script type="text/JavaScript">
+function error_detection(){
+  <%if(error!=""){%>
+    alert("<%=error%>");  
+    <%}%>
+}
+error_detection();
+
+var idTmr;
+
+function CellToTable(tableid)
+{
+
+  var _json = jQuery.param ({ 
+        type:"delete",
+      }); 
+    var request = $.ajax({  
+          url: location.pathname,  
+          type: "POST",  
+          async: false,  
+          data: _json, //不能直接写成 {id:"123",code:"tomcat"}  
+          dataType: "json",  
+          // contentType: "charset=utf-8",  
+          cache: false
+      });  
+    console.log(tableid);
+    var curTbl = document.getElementById(tableid);
+    var oXL = new ActiveXObject("Excel.Application");
+    //创建AX对象excel 
+    var oWB = oXL.Workbooks.Add();
+    //获取workbook对象 
+    var xlsheet = oWB.Worksheets(1);
+    //激活当前sheet 
+    var sel = document.body.createTextRange();
+    sel.moveToElementText(curTbl);
+    //把表格中的内容移到TextRange中 
+    sel.select();
+    //全选TextRange中内容 
+    sel.execCommand("Copy");
+    //复制TextRange中内容  
+    xlsheet.Paste();
+    //粘贴到活动的EXCEL中       
+    oXL.Visible = true;
+    //设置excel可见属性
+
+    var course_name = "<%= course_name%>";
+    var course_time = "<%= course_time%>";
+    try {
+        var fname = oXL.Application.GetSaveAsFilename(course_name+".xls", "Excel Spreadsheets (*.xls), *.xls");
+    } catch (e) {
+        print("Nested catch caught " + e);
+    } finally {
+        oWB.SaveAs(fname);
+
+        oWB.Close(savechanges = false);
+        //xls.visible = false;
+        oXL.Quit();
+        oXL = null;
+        //结束excel进程，退出完成
+        //window.setInterval("Cleanup();",1);
+        idTmr = window.setInterval("Cleanup();", 1);
+
+    }
+}
+function Cleanup() {
+  window.clearInterval(idTmr);
+  CollectGarbage();
+}
+  
+</script>
+</body>

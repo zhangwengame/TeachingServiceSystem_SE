@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+<head>
+  <% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<%if(type==0) {%>
+<% include slide.html%>
+<% }%>
+<%if(type==1) {%>
+<% include slide_teacher.html%>
+<% }%>
+<%if(type==2) {%>
+<% include slide_manager.html%>
+<% }%>
+<script type="text/javascript">
+   function setActive(){
+    var active=document.getElementById('manual');
+    active.className='active';
+  }
+  setActive();
+</script>
+	<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-edit"></i>手动补退选</h3>
+          <h5>管理员手动补选、退选课程</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 添加一个时间段 -->
+  <div class="span10">
+    <div class="box">
+      <div class="box-header">
+        <span class="title">手动退选</span>
+      </div>
+      <div class="box-content scrollable" style="min-height: 300px; overflow-y:auto"> 
+		<div class="box-content padded">
+			<span>课程号:&nbsp;&nbsp;</span>
+	  		<input type="text" style="margin-top:10px;" name="course_id" id="course_id">	
+	  		<button class="btn btn-blue" style="margin-left:10px;" onclick="search()" tyle="button">搜索</button>
+	  		<hr/>
+	  		<table width="100%" class="table table-normal" style="text-align:center;" id="table2">
+	  		<thead>
+                <tr>
+                  <td>教师</td>
+                  <td>上课时间</td>
+                  <td>校区</td>
+                  <td>教室</td>
+				  <td>余量/容量</td>
+				  <td>待定人数</td>
+				  <td>选课</td>
+                </tr>
+          </thead>
+        </table>
+        <hr/>
+
+			<span>学号ID:&nbsp;&nbsp;</span>
+	  		<input type="text" style="margin-top:10px;" name="student_id" id="student_id">
+      		<br/>
+            <button class="btn btn-blue" style="margin-left:10px;" onclick="add_course()">选课</button>
+	  		<button class="btn btn-blue" style="margin-left:10px;" onclick="delete_course()">退课</button>
+	  		
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+function search(){
+	console.log("search!!");
+	var course_id=document.getElementById("course_id").value;
+	var _json = jQuery.param ({	
+    		type:"search",
+    		course_id:course_id
+    	}); 
+    var request = $.ajax({  
+        	url: "/select/manual_add",  
+        	type: "POST",  
+        	async: false,  
+        	data: _json, //不能直接写成 {id:"123",code:"tomcat"}  
+        	dataType: "json",  
+        	// contentType: "charset=utf-8",  
+        	cache: false,
+          success:function(data){
+            console.log("suss");
+            /*var course=[];
+          course.push({teacher:"xxx",campus:"玉泉",time:"周一12 周三345",room:"曹西502",language:"双语",remain:20,all:40,waiting:30,courseid:1});
+          course.push({teacher:"xxx",campus:"玉泉",time:"周一12 周三345",room:"曹西502",language:"双语",remain:20,all:40,waiting:30,courseid:2});
+          course.push({teacher:"xxx",campus:"玉泉",time:"周一12 周三345",room:"曹西502",language:"双语",remain:20,all:40,waiting:30,courseid:3});
+          var data={status:'succ',courseData:course}*/
+            if (data.status=='succ')
+            {
+                var content=document.getElementById("content");
+                if(content!=null) content.remove();
+                var str=document.getElementById("table2").innerHTML;
+                console.log(str);
+                str=str+"<tbody id=\"content\">";
+                for(var i=0;i<data.courseData.length;i++){
+                  var tmp="";
+                 tmp="<tr><td>"+data.courseData[i].teacher+"</td><td>"+data.courseData[i].time+"</td><td>"+data.courseData[i].campus+"</td><td>"+data.courseData[i].room+"</td><td>"+data.courseData[i].remain+"/"+data.courseData[i].all+"</td><td>"+data.courseData[i].waiting+"</td><td><input type=\"radio\" name=\"choose\" class=\"icheck\" id=\"iradio"+i+"\" value=\""+data.courseData[i].courseid+"\"></td></tr>";
+                  str=str+tmp;
+                }
+                str=str+"</tbody>";
+                console.log(str);
+                document.getElementById("table2").innerHTML=str; 
+            }
+            else
+              alert(data.error);
+          }
+    	});  
+}
+function add_course(){
+	console.log("add!!");
+	// var course_id=document.getElementsByName("choose").value;
+  var temp=document.getElementsByName("choose");
+  var course_id;
+  for(var i=0;i<temp.length;i++){
+    if(temp[i].checked) course_id=temp[i].value;
+  }
+  console.log(course_id);
+	var stu_id=document.getElementById("student_id").value;
+	var _json = jQuery.param ({	
+    		type:"add",
+    		course_id:course_id,
+    		stu_id:stu_id
+    	}); 
+    var request = $.ajax({  
+        	url: "/select/manual_add",  
+        	type: "POST",  
+        	async: false,  
+        	data: _json, //不能直接写成 {id:"123",code:"tomcat"}  
+        	dataType: "json",  
+        	// contentType: "charset=utf-8",  
+        	cache: false,
+          success:function(data){
+            if(data.status=="succ"){
+              alert("选课成功");
+              location.reload();
+            }
+            else{
+              alert(data.error);
+            }
+          } 
+    	});  
+    //location.reload(); 
+}
+function delete_course(){
+	console.log("delete!!");
+  var temp=document.getElementsByName("choose");
+	var course_id;
+  for(var i=0;i<temp.length;i++){
+    if(temp[i].checked) course_id=temp[i].value;
+  }
+  console.log(course_id);
+	var stu_id=document.getElementById("student_id").value;
+	var _json = jQuery.param ({	
+    		type:"delete",
+    		course_id:course_id,
+    		stu_id:stu_id
+    	}); 
+    var request = $.ajax({  
+        	url: "/select/manual_add",  
+        	type: "POST",  
+        	async: false,  
+        	data: _json, //不能直接写成 {id:"123",code:"tomcat"}  
+        	dataType: "json",  
+        	// contentType: "charset=utf-8",  
+        	cache: false,
+          success:function(data){
+            if(data.status=="succ"){
+              alert("退课成功");
+              location.reload();
+            }
+            else{
+              alert(data.error);
+            }
+          } 
+    	});  
+    location.reload(); 
+}
+</script>
+</body>

@@ -1,0 +1,60 @@
+<div class="sidebar-background">
+    <div class="primary-sidebar-background"></div>
+</div>
+<div class="primary-sidebar">
+    <!--侧边选择框 -->
+    <% var courses = slide_course.courses ? slide_course.courses : []; %>
+    <%if (courses.length!=0) {%>
+    <ul class="nav nav-collapse collapse nav-collapse-primary">
+        <%if (courses.length <=10) {%>
+        <% for(var i = 0; i < courses.length; i++) {
+        var active = courses[i].courseid === current_cid ? "active" : "";
+        %>
+        <li class="<%= active%>" >
+            <span class="glow"></span>
+            <a href="/resource/course/data?cid=<%= courses[i].courseid %>">
+                <i class="icon-tag icon-2x"></i>
+                <span style="font-size:15px"><%= courses[i].coursename %></span>
+            </a>
+        </li>
+        <% }%>
+        <%}else{%>
+        <% for(var i = 0; i < 10; i++) {
+        var active = courses[i].courseid === current_cid ? "active" : "";
+        %>
+        <li class="<%= active%>" >
+            <span class="glow"></span>
+            <a href="/resource/course/data?cid=<%= courses[i].courseid %>">
+                <i class="icon-tag icon-2x"></i>
+                <span style="font-size:15px"><%= courses[i].coursename %></span>
+            </a>
+        </li>
+        <% }%>
+        <li class="dark-nav" id="course_list">
+            <span class="glow"></span>
+            <a class="accordion-toggle collapsed " data-toggle="collapse" href="#course_toggle">
+                <i class="icon-tag icon-2x"></i>
+                <span style="font-size:15px">展开其他课程<i class="icon-caret-down"></i></span>
+            </a>
+            <ul id="course_toggle" class="collapse">
+                <% for(var i = 10; i < courses.length; i++) {
+                var active = courses[i].courseid === current_cid ? "active" : "";
+                %>
+                <li class="<%= active%>" style="margin:10px;font-size:13px;">
+                    <a href="/resource/course/data?cid=<%= courses[i].courseid %>">
+                        <i class="icon-tag icon-2x"></i>
+                        <span style="font-size:15px"><%= courses[i].coursename %></span>
+                    </a>
+                </li>
+                <% }%>
+            </ul>
+        </li>
+        <%}%>
+    </ul>
+    <%}%>
+    <a href="/resource/cloud" id="toCloud" class="btn btn-info btn-lg" style="position:absolute;width:115px;margin-top:60px;margin-left:35px;margin-bottom:50px;text-align: center;height:30px;padding:10px;">
+        <i class="icon-file icon-2x" style="color:white;"></i>
+        <span id="cloud-course" style="font-size:15px;color:white;vertical-align: middle;">我的云盘</span>
+    </a>
+
+</div>

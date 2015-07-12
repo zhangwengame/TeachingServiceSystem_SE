@@ -1,0 +1,270 @@
+<!doctype html>
+<html>
+<head>
+  <% include ../head.html %>
+</head>
+<body>
+<!-- 上方选择条 navbar-top-->
+<% include ../navbar.html %>
+<!-- 侧边框 -->
+<%if(type==0) {%>
+<% include slide.html%>
+<% }%>
+<%if(type==1) {%>
+<% include slide_teacher.html%>
+<% }%>
+<%if(type==2) {%>
+<% include slide_manager.html%>
+<% }%>
+<script type="text/javascript">
+   function setActive(){
+    var active=document.getElementById('time_check');
+    active.className='active';
+  }
+  setActive();
+</script>
+	<!-- 主要内容 -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title"><i class="icon-calendar"></i>选课时间</h3>
+          <h5>制定选课时间</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 添加一个时间段 -->
+  <div class="span10">
+    <div class="box">
+      <div class="box-header">
+        <span class="title">选课时间</span>
+      </div>
+      <div class="box-content scrollable" style="height:500px;overflow-y:auto"> 
+			<div class="box-content padded">
+				<span>&nbsp;&nbsp;开始时间:&nbsp;&nbsp;</span>
+		  		<div class="btn-group">
+		    		<button class="btn btn-default  dropdown-toggle" data-toggle="dropdown">
+		      			<span id="start_year">2015</span>
+		      			<span class="caret"></span>
+		      		</button>
+		    		<ul class="dropdown-menu">
+		      			<li><a href="javascript:change_syear(1)" id="syear1">1995</a></li>
+		      			<li><a href="javascript:change_syear(2)" id="syear2">1996</a></li>
+		      			<li><a href="javascript:change_syear(3)" id="syear3">1997</a></li>
+		    		</ul>
+		  		</div>
+		  		<span>年&nbsp;&nbsp;</span>
+		  		<div class="btn-group">
+		    		<button class="btn btn-default  dropdown-toggle" data-toggle="dropdown">
+		      			<span id="start_month">1月</span>
+		      			<span class="caret"></span>
+		      		</button>
+		    		<ul class="dropdown-menu">
+		      			<li><a href="javascript:change_smonth(1)" id="smonth1">1月</a></li>
+		      			<li><a href="javascript:change_smonth(2)" id="smonth2">2月</a></li>
+		      			<li><a href="javascript:change_smonth(3)" id="smonth3">3月</a></li>
+		      			<li><a href="javascript:change_smonth(4)" id="smonth4">4月</a></li>
+		      			<li><a href="javascript:change_smonth(5)" id="smonth5">5月</a></li>
+		      			<li><a href="javascript:change_smonth(6)" id="smonth6">6月</a></li>
+		      			<li><a href="javascript:change_smonth(7)" id="smonth7">7月</a></li>
+		      			<li><a href="javascript:change_smonth(8)" id="smonth8">8月</a></li>
+		      			<li><a href="javascript:change_smonth(9)" id="smonth9">9月</a></li>
+		      			<li><a href="javascript:change_smonth(10)" id="smonth10">10月</a></li>
+		      			<li><a href="javascript:change_smonth(11)" id="smonth11">11月</a></li>
+		      			<li><a href="javascript:change_smonth(12)" id="smonth12">12月</a></li>
+		    		</ul>
+		  		</div>
+		  		<span>月&nbsp;&nbsp;</span>
+		  		<input type="text" style="width:20px;margin-top:10px;" id="start_day">
+		  		<span>日&nbsp;&nbsp;</span>
+		  		<span>&nbsp;&nbsp;结束时间:&nbsp;&nbsp;</span>
+		  		<div class="btn-group">
+		    		<button class="btn btn-default  dropdown-toggle" data-toggle="dropdown">
+		      			<span id="end_year">2015</span>
+		      			<span class="caret"></span>
+		      		</button>
+		    		<ul class="dropdown-menu">
+		      			<li><a href="javascript:change_eyear(1)" id="eyear1">1995</a></li>
+		      			<li><a href="javascript:change_eyear(2)" id="eyear2">1996</a></li>
+		      			<li><a href="javascript:change_eyear(3)" id="eyear3">1997</a></li>
+		    		</ul>
+		  		</div>
+		  		<span>年&nbsp;&nbsp;</span>
+		  		<div class="btn-group">
+		    		<button class="btn btn-default  dropdown-toggle" data-toggle="dropdown">
+		      			<span id="end_month">1月</span>
+		      			<span class="caret"></span>
+		      		</button>
+		    		<ul class="dropdown-menu">
+		      			<li><a href="javascript:change_emonth(1)" id="emonth1">1月</a></li>
+		      			<li><a href="javascript:change_emonth(2)" id="emonth2">2月</a></li>
+		      			<li><a href="javascript:change_emonth(3)" id="emonth3">3月</a></li>
+		      			<li><a href="javascript:change_emonth(4)" id="emonth4">4月</a></li>
+		      			<li><a href="javascript:change_emonth(5)" id="emonth5">5月</a></li>
+		      			<li><a href="javascript:change_emonth(6)" id="emonth6">6月</a></li>
+		      			<li><a href="javascript:change_emonth(7)" id="emonth7">7月</a></li>
+		      			<li><a href="javascript:change_emonth(8)" id="emonth8">8月</a></li>
+		      			<li><a href="javascript:change_emonth(9)" id="emonth9">9月</a></li>
+		      			<li><a href="javascript:change_emonth(10)" id="emonth10">10月</a></li>
+		      			<li><a href="javascript:change_emonth(11)" id="emonth11">11月</a></li>
+		      			<li><a href="javascript:change_emonth(12)" id="emonth12">12月</a></li>
+		    		</ul>
+		  		</div>
+		  		<span>月&nbsp;&nbsp;</span>
+		  		<input type="text" style="width:20px;margin-top:10px;"  name="end_day" id="end_day">
+		  		<span>日&nbsp;&nbsp;</span>
+		  		<div class="icheckbox_flat-aero" style="position: relative;top:8px;">
+		  			<input type="checkbox" class="icheck" id="icheck1" name="way" value="1">
+		  		</div>
+				<label for="icheck1" class="" style="top:2px;margin-right:7px;">选课&nbsp;&nbsp;</label>
+				<div class="icheckbox_flat-aero" style="position: relative;top:8px">
+		  			<input type="checkbox" class="icheck" id="icheck2" name="way" value="2">
+		  		</div>
+				<label for="icheck1" class="" style="top:2px;margin-right:7px;">退课&nbsp;&nbsp;</label>
+				<button onclick="submit_add()" class="btn btn-blue">添加</button>
+				<hr/>
+				<table class="table table-normal">
+    				<thead>
+      				<tr>
+        				<td width="30%">开始时间</td>
+        				<td width="30%">结束时间</td>
+        				<td width="15%">选课</td>
+        				<td width="15%">退课</td>
+        				<td width="10%">选项</td>
+      				</tr>
+    				</thead>
+    				<tbody>
+    				<%for(var i=0;i<choose_time.length;i++){%>
+    				<tr>
+    					<td><%=choose_time[i].start_time%></td>
+    					<td><%=choose_time[i].end_time%></td>
+    					<% if(choose_time[i].isChoose) {%>
+    					<td><i class="icon-ok-sign"></i></td>
+    					<%}%>
+    					<% if(!choose_time[i].isChoose) {%>
+    					<td><i class="icon-minus-sign"></i></td>
+    					<%}%>
+    					<% if(choose_time[i].isCancell) {%>
+    					<td><i class="icon-ok-sign"></i></td>
+    					<%}%>
+    					<% if(!choose_time[i].isCancell) {%>
+    					<td><i class="icon-minus-sign"></i></td>
+    					<%}%>
+    					<td><button onclick="submit_del('<%=choose_time[i].ID%>')" class="btn btn-sm btn-default">删除</button></td>
+    				</tr>
+    				<%}%>
+    				</tbody>
+    			</table>
+    			</hr>
+    			<form name="input" action="/select/course_filtrate" method="post">
+              		<div class="input" style="display:inline; text-align:center;">
+                 		 <label style="float:left; margin-top:5px;">筛选时间:&nbsp;</label>
+                  			<select class="uniform" name="result">
+                      		<% for(var i=0;i<choose_time.length;i++){%>
+                      			<option value="<%=i%>"><%= choose_time[i].start_time%> ~ <%= choose_time[i].end_time%></option>
+                      		<% } %>
+                  			</select>
+                  		<button type="submit" class="btn btn-blue" style="margin-left:30px;">筛选</button>
+              		</div>
+          		</form>
+			</div>
+        </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+	var myDate=new Date();
+	var year=myDate.getFullYear();
+	document.getElementById("start_year").innerHTML=year;
+	document.getElementById("end_year").innerHTML=year;
+	document.getElementById("syear1").innerHTML=year-1;
+	document.getElementById("syear2").innerHTML=year;
+	document.getElementById("syear3").innerHTML=year+1;
+	document.getElementById("eyear1").innerHTML=year-1;
+	document.getElementById("eyear2").innerHTML=year;
+	document.getElementById("eyear3").innerHTML=year+1;
+	function change_syear(i){
+		var s=document.getElementById("syear"+i).innerHTML;
+		document.getElementById("start_year").innerHTML=s;
+	}
+	function change_smonth(i){
+		var s=document.getElementById("smonth"+i).innerHTML;
+		document.getElementById("start_month").innerHTML=s;
+	}
+	function change_eyear(i){
+		var s=document.getElementById("eyear"+i).innerHTML;
+		document.getElementById("end_year").innerHTML=s;
+	}
+	function change_emonth(i){
+		var s=document.getElementById("emonth"+i).innerHTML;
+		document.getElementById("end_month").innerHTML=s;
+	}
+	function submit_add(){
+		var start_year=document.getElementById("start_year").innerHTML;
+		var start_month=document.getElementById("start_month").innerHTML;
+		var start_day=document.getElementById("start_day").value;
+		var end_year=document.getElementById("end_year").innerHTML;
+		var end_month=document.getElementById("end_month").innerHTML;
+		var end_day=document.getElementById("end_day").value;
+		var isChoose=document.getElementsByName("way")[0].checked;
+		var isCancell=document.getElementsByName("way")[1].checked;
+    	if(start_day==""||end_day==""){
+    		alert("日期不能为空！");
+    		return;
+    	}	
+    	var _json = jQuery.param ({
+    		start_year:start_year,
+    		start_month:start_month,
+    		start_day:start_day,
+    		end_year:end_year,
+    		end_month:end_month,
+    		end_day:end_day,
+    		isChoose:isChoose,
+    		isCancell:isCancell,
+    		type:"add"
+    	});  
+   		var request = $.ajax({  
+        	url: "/select/time",  
+        	type: "POST",  
+        	async: false,  
+        	data: _json, //不能直接写成 {id:"123",code:"tomcat"}  
+        	dataType: "json",  
+        	// contentType: "charset=utf-8",  
+        	cache: false,
+        	success:function(data){
+        		if (data.status=='succ')
+        			location.reload();
+        		else
+        			alert(data.error);
+        	},
+        	error:function(error){
+        		alert(error);
+        	}
+    	}); 
+    }
+	function submit_del(id){
+		var _json = jQuery.param ({	
+    		type:"delete",
+    		id:id
+    	});  
+   		var request = $.ajax({  
+        	url: "/select/time",  
+        	type: "POST",  
+        	async: false,  
+        	data: _json, //不能直接写成 {id:"123",code:"tomcat"}  
+        	dataType: "json",  
+        	// contentType: "charset=utf-8",  
+        	cache: false,
+        	success:function(data){
+        		if (data.status=='succ')
+        			location.reload();
+        		else
+        			alert(data.error);
+        	}
+       	});  
+	}
+
+</script>
+</body>

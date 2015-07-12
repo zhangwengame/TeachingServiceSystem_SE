@@ -1,0 +1,35 @@
+<div class="sidebar-background">
+  <div class="primary-sidebar-background"></div>
+</div>
+<div class="primary-sidebar">
+  <ul class="nav nav-collapse collapse nav-collapse-primary">    
+    <li id='classManagement'>
+      <span class="glow"></span>
+      <a href="grades">
+        <i class="icon-key icon-2x"></i>
+        <span>成绩审核</span>
+      </a>
+    </li>
+    
+  </ul>
+  <hr class="divider" style="margin-top: 60px" />
+  <div class="sparkline-box side">
+    <div class="sparkline-row">
+      <h4 class="gray"><span>本学期课程</span><%= total_a %></h4>
+      <div class="sparkline big" data-color="gray"><!--<%= a %>--></div>
+    </div>
+  <hr class="divider" />
+  <div class="sparkline-row">
+      <h4 class="dark-green"><span>本学期课时</span><%= total_b %></h4>
+      <div class="sparkline big" data-color="darkGreen"><!--<%= b %>--></div>
+  </div>
+
+  <hr class="divider" />
+  <div class="sparkline-row">
+    <h4 class="blue"><span>本学期学分</span><%= total_credits %></h4>
+    <div class="sparkline big" data-color="blue"><!--<%= credits %>--></div>
+  </div>
+  <hr class="divider" />
+  </div>
+  </div>
+</div>

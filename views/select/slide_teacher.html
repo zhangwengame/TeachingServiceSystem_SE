@@ -1,0 +1,54 @@
+<div class="sidebar-background">
+  <div class="primary-sidebar-background"></div>
+</div>
+<div class="primary-sidebar">
+  <!--侧边选择框 -->
+  <ul class="nav nav-collapse collapse nav-collapse-primary">
+    <li class="dark-nav " id="dev_plan">
+      <span class="glow"></span>
+      <a class="accordion-toggle collapsed " data-toggle="collapse" href="#MB8CPSHAKP">
+        <i class="icon-dashboard icon-2x"></i>
+        <span>培养方案<i class="icon-caret-down"></i></span>
+      </a>
+      <ul id="MB8CPSHAKP" class="collapse ">            
+        <li class="">
+          <a href="/select/dev_plan"><i class="icon-time"></i>专业培养方案</a>
+        </li>
+      </ul>
+    </li>
+    <li id="course_search">
+      <span class="glow"></span>
+      <a href="/select/course">
+        <i class="icon-search icon-2x"></i>
+        <span>课程搜索</span>
+      </a>
+    </li>
+     <li id="my_course">
+      <span class="glow"></span>
+      <a href="/select/my_course">
+        <i class="icon-calendar icon-2x"></i>
+        <span>个人课表</span>
+      </a>
+    </li>
+  </ul>
+  <hr class="divider" style="margin-top: 60px" />
+  <div class="sparkline-box side">
+    <div class="sparkline-row">
+      <h4 class="gray"><span>本学期课程</span><%= total_a %></h4>
+      <div class="sparkline big" data-color="gray"><!--<%= a %>--></div>
+    </div>
+  <hr class="divider" />
+  <div class="sparkline-row">
+      <h4 class="dark-green"><span>本学期课时</span><%= total_b %></h4>
+      <div class="sparkline big" data-color="darkGreen"><!--<%= b %>--></div>
+  </div>
+
+  <hr class="divider" />
+  <div class="sparkline-row">
+    <h4 class="blue"><span>本学期学分</span><%= total_credits %></h4>
+    <div class="sparkline big" data-color="blue"><!--<%= credits %>--></div>
+  </div>
+  <hr class="divider" />
+  </div>
+  </div>
+</div>

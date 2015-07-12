@@ -1,5 +1,6 @@
-## This is a group project, and I am the leader of elective system. 
-## The original project URL: https://gitcafe.com/ZJUSEGroupA/TeachingServiceSystem
+### This is a group project and I am the leader of elective system. 
+### The original project URL: https://gitcafe.com/ZJUSEGroupA/TeachingServiceSystem
+- - -
 # Teaching Service System Reference
 ## Configuration for Server
 ### Basic Environment

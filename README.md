@@ -1,19 +1,19 @@
-# 教务管理系统用户手册
-## 服务器配置
-### 基本环境
-语言: NodeJS v0.12.0
+## This is a group project, and I am the leader of elective system. 
+## The original project URL: https://gitcafe.com/ZJUSEGroupA/TeachingServiceSystem
+# Teaching Service System Reference
+## Configuration for Server
+### Basic Environment
+Language: NodeJS v0.12.0
 
-数据库: Mongodb v3.0.1
+Database: Mongodb v3.0.1
 
-（为了支持在数据库中的搜索功能需要其他依赖的插件）
+### Steps for Starting
 
-### 开启步骤
-
-1. 配置settings.js，填入需要连接的数据库地址，可参考settings.example.js
+1. Fill the address for database in settings.js. Please take settings.example.js as an example
 2. npm install
-3. NODE_ENV="pro" npm start（直接npm start 为debug环境）
-4. 监听端口为3000。
-4. 访问路由 /adduser可自动生成一个系统管理员，账号密码为：3120000000，3120000000
+3. NODE_ENV="pro" npm start
+4. Listening port is 3000。
+4. Visit /adduser to add a administrator whose username and password are (3120000000,3120000000).
 
 ## 管理员管理
 ### 用户和课程
